@@ -1,0 +1,53 @@
+#page1 {
+    margin-top: 120px;
+}
+
+#page1 .judul h1 {
+    font-size: 2.2em;
+    font-family: 'jakartaSansBold';
+    color: #258D00;
+}
+
+
+
+
+/* page 2 */
+#page2 {
+    margin-top: 80px;
+}
+
+
+#page2 .input label {
+    margin-top: 30px;
+    font-size: 1.1em;
+    font-family: 'jakartaSansSemiBold';
+}
+
+#page2 .input input {
+    margin-top: 20px;
+    padding: 16px;
+    font-size: .9em;
+}
+
+#page2 .input label span {
+    color: red;
+}
+
+#page2 .input .ktp {
+    border: 1px solid black;
+    padding: 20px;
+}
+
+#page2 .input .ktp p {
+    margin: 10px 0;
+}
+
+#page2 button {
+    width: 315px;
+    font-size: 1.2em;
+    font-family: 'jakartaSansBold';
+    border: none;
+    background-color: #AEF161;
+    border-radius: 10px;
+    margin-top: 50px;
+}

@@ -1,0 +1,103 @@
+/* Main */
+#page1 {
+    margin-top: 120px;
+}
+
+#page1 .judul h1 {
+    font-size: 2.2em;
+    font-family: 'jakartaSansBold';
+    color: #258D00;
+}
+
+
+
+
+
+
+
+#page2 {
+    margin-top: 80px;
+}
+
+
+#page2 .input label {
+    margin-top: 30px;
+    font-size: 1.1em;
+    font-family: 'jakartaSansSemiBold';
+}
+
+#page2 .input input,
+#page2 .input .dropdown-center button, .form-select{
+    margin-top: 20px;
+    padding: 16px;
+    font-size: .9em;
+    width: 70%;
+    margin-bottom: 30px;
+}
+
+#page2 .input label span {
+    color: red;
+}
+
+#page2 .input .dropdown-center button, .form-select{
+    padding: 16px;
+    font-size: .9em;
+    border: 1px solid gray;
+    border-radius: 2px;
+    color: gray;
+}
+
+#page2 .input .tanggal .mulai p,
+#page2 .input .tanggal .selesai p {
+    font-size: .8em;
+}
+
+#page2 .right .input input {
+    width: 100%;
+}
+
+#page2 .row2 button, .confirmation-button {
+    width: 30%;
+    padding: 16px 18px;
+    font-family: 'jakartaSansBold';
+    font-size: 1.3em;
+    border: none;
+    background-color: #AEF161;
+    border-radius: 10px;
+    margin: 100px 0;
+}
+
+#page2 .right .input .ktp {
+    border: 1px solid gray;
+    padding: 30px;
+}
+
+.form-select{
+    margin-top: 60px;
+    padding: 16px;
+    font-size: .9em;
+    width: 70%;
+    margin-bottom: 30px;
+    margin-left: 5px;
+}
+
+.form-select{
+    padding: 16px;
+    font-size: .9em;
+    border: 1px solid gray;
+    border-radius: 2px;
+    color: gray;
+}
+
+.select-group{
+    margin-top: -40px;
+}
+
+.ck-editor__editable[role="textbox"] {
+    /* Editing area */
+    min-height: 200px;
+}
+
+.eventForm input{
+    width: 100% !important;
+}

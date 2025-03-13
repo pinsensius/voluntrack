@@ -1,0 +1,127 @@
+/* font */
+
+@font-face {
+    font-family: 'jakartaSansRegular';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Regular.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Bold.ttf) format(truetype);
+}
+
+
+@font-face {
+    font-family: 'jakartaSansExtraBold';
+    src: url(../ont/Plus_Jakarta_Sans/static/PlusJakartaSans-ExtraBold.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansSemiBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-SemiBold.ttf) format(truetype);
+}
+
+/* Universal */
+
+body {
+    overflow: hidden;
+}
+
+
+.container-fluid {
+    font-size: 16px;
+}
+
+
+.container-fluid .row {
+    padding: 3.25em 6.5em;
+    height: 100vh;
+}
+
+.input-form .logo img {
+    width: 4vw;
+}
+
+.input-form .logo h5, .welcome h5 {
+    font-size: 1.5em;
+}
+
+.input-form .logo h5 {
+    font-size: 1.8em;
+    font-family: 'jakartaSansBold';
+}
+
+.input-form .welcome p {
+    font-size: .8em;
+}
+
+.input-form .input label {
+    margin-top: 1.2em;
+    font-family: 'jakartaSansSemiBold';
+}
+
+.input-form .input span {
+    color: red;
+}
+
+.input-form .input input {
+    margin-top: .8em;
+    padding: 10px;
+    font-size: .8em;
+    border-radius: 5px;
+    border: 1px solid #cdcccc;
+    color: #646464;
+}
+
+.input-form .remember {
+    font-size: .8em;
+    width: 100%;
+    display: block;
+}
+
+.garis {
+    border: 1px solid #cdcccc;
+    position: absolute;
+    transform: rotate(90deg);
+    left: -150px;
+    box-shadow: 0 -1px 4px 1px #ddd;
+}
+
+
+.input-form a {
+    color: black;
+}
+
+.input-form button {
+    width: 100%;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    background-color: #AEF161;
+    padding: 10px 0;
+}
+
+.input-form p:last-child {
+    text-align: center;
+    margin-top: 20px;
+    font-size: .9em;
+    font-family: 'jakartaSansSemiBold';
+}
+
+.input-form p a {
+    color: #258D00;
+}
+
+
+/* Kata Sandi salah */
+.wrong-pw {
+    width: 13vw;
+    height: 2.3vw;
+    border: 1px solid rgb(255, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8B3333;
+    background: rgba(255, 0, 0, .1);
+    border-radius: 7px;
+}

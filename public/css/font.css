@@ -1,0 +1,31 @@
+/* Font */
+@font-face {
+    font-family: 'jakartaSansRegular';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Regular.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Bold.ttf) format(truetype);
+}
+
+
+@font-face {
+    font-family: 'jakartaSansExtraBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-ExtraBold.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansSemiBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-SemiBold.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansMedium';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Medium.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansExtraBoldItalic';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-ExtraBoldItalic.ttf) format(truetype);
+}

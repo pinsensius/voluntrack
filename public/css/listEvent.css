@@ -1,0 +1,143 @@
+main {
+    margin-top: 100px;
+    padding-bottom: 200px;
+}
+
+main .row1 .judul h5 {
+    font-family: 'jakartaSansBold';
+    color: #258D00;
+    font-size: 2.1em;
+}
+
+
+main .row2 {
+    margin: 50px 0;
+}
+
+main .row2 .search .input-group-prepend span,
+main .row2 .search .input,
+main .row2 .search .input-group-append span{
+    padding: 10px;
+}
+
+main .row2 .search .input-group-append i {
+    margin-left: 10px;
+}
+
+
+main .row2 .create p {
+    margin: 0;
+    font-family: 'jakartaSansSemiBold';
+}
+
+main .row2 .create u {
+    font-family: 'jakartaSansSemiBold';
+    color: #258D00;
+}
+
+
+
+
+main .card {
+    border: none;
+}
+
+main .card .caption-kegiatan {
+    padding: 20px;
+}
+
+main .card .caption-kegiatan p.pt-3 {
+    opacity: 50%;
+}
+
+main .card .caption-kegiatan p:first-child {
+    color: #808080;
+}
+
+main .card .caption-kegiatan .kategori {
+    width: 200px;
+    border-radius: 10px;
+    text-align: center;
+    height: 40px;
+    margin-left: 10px;
+}
+
+main .card .caption-kegiatan .kategori1 {
+    border: 1px solid #E15101;
+    color: #E15101;
+    background: rgba(229, 103, 33, .1);
+}
+
+main .card .caption-kegiatan .kategori2 {
+    border: 1px solid #057CD2;
+    color: #057CD2;
+    background: rgba(5, 124, 210, .1);
+}
+
+main .card .caption-kegiatan .kategori3 {
+    border: 1px solid #FF8CE6;
+    color: #FF00C7;
+    background: rgba(255, 0, 199, .1);
+}
+
+main .card .caption-kegiatan .kategori4 {
+    border: 1px solid #E56721;
+    color: rgb(225, 81, 1);
+    background: rgba(255, 81, 1, .1);
+}
+
+main .card .caption-kegiatan .kategori5 {
+    border: 1px solid #EE676F;
+    color: rgb(228, 25, 25);
+    background: rgb(228, 25, 25, .1);
+}
+
+main .card .caption-kegiatan .kategori6 {
+    border: 1px solid #CED205;
+    color: rgb(185, 170, 26);
+    background: rgb(185, 170, 26, .1);
+}
+
+main .card .caption-kegiatan .kategori span {
+    font-family: 'jakartaSansSemiBold';
+    font-size: .8em;
+}
+
+main .card .caption-kegiatan button, .kartuEvent button{
+    width: 100%;
+    padding: 15px;
+    margin: 25px 0;
+    font-family: 'jakartaSansBold';
+    border: none;
+    border-radius: 10px;
+    background-color: #AEF161;
+}
+
+main .card .caption-kegiatan .button2, .kartuEvent .button2{
+    background: transparent;
+    color: #7E9C5C;
+    border: 1px solid #7E9C5C;
+}
+/* .capt{
+    width: 150px !important;
+} */
+
+
+
+main .tombol button.cText2 {
+    border: 3px solid #51A433;
+    color: #51A433;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-family: 'jakartaSansBold';
+    background-color: transparent;
+}
+
+main .tombol button {
+    width: 30%;
+}
+
+.empty-event{
+    font-family: 'jakartaSansBold';
+    color: #258D00;
+}

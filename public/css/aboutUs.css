@@ -1,0 +1,197 @@
+@font-face {
+    font-family: 'jakartaSansRegular';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Regular.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-Bold.ttf) format(truetype);
+}
+
+
+@font-face {
+    font-family: 'jakartaSansExtraBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-ExtraBold.ttf) format(truetype);
+}
+
+@font-face {
+    font-family: 'jakartaSansSemiBold';
+    src: url(../Font/Plus_Jakarta_Sans/static/PlusJakartaSans-SemiBold.ttf) format(truetype);
+}
+
+.akun button a {
+    text-decoration: none;
+    color: black;
+}
+
+/* Universal */
+* {
+    font-family: 'jakartaSansRegular';
+}
+
+body {
+    font-size: 16px;
+}
+
+#page2,
+#page3,
+#page4,
+footer {
+    margin-top: 120px;
+    padding: 0 120px;
+}
+
+#page1 .right-text h1,
+#page2 h1 {
+    font-family: 'jakartaSansExtraBold';
+    font-size: 3em;
+    width: 600px;
+}
+/* Akhir universal */
+
+.judul h5 {
+    color: black;
+    font-family: 'jakartaSansBold';
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+nav {
+    padding: 0 120px;
+}
+
+.navbar>* {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigasi ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navigasi ul li {
+    list-style: none;
+    margin: 0 15px;
+}
+
+.navigasi ul li a {
+    text-decoration: none;
+    color: black;
+    opacity: .6;
+    font-weight: bold;
+    font-size: .9em;
+}
+
+.akun button:first-child {
+    background-color: transparent;
+}
+
+
+.akun button {
+    width: 90px;
+    border-radius: 10px;
+    padding: 5px 15px;
+    border: none;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* Page 1 */
+#page1 {
+    margin-top: 100px;
+}
+
+#page1 .right-text h5 {
+    font-family: 'jakartaSansBold';
+    color: #258D00;
+}
+
+
+#page1 .right-text .caption {
+    margin-top: 30px;
+    width: 550px;
+    margin-bottom: 50px;
+}
+
+
+
+#page1 .hero-image2 {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+
+
+
+/* Page 2 */
+/* Slogan */
+#page2 .left-text button {
+    margin-top: 30px;
+    width: 25%;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    background-color: #AEF161;
+    padding: 10px 0;
+}
+
+
+/* Page 3 */
+/* Founder */
+#page3 .row {
+    border-top: 1px solid #CACACA;
+    border-bottom: 1px solid #CACACA;
+    padding: 100px 0;
+}
+
+#page3 .founder-profile h4 {
+    font-family: 'jakartaSansExtraBold';
+}
+
+#page3 .founder-profile h5 {
+    font-family: 'jakartaSansBold';
+}
+
+/* Page 4 */
+/* Ulasan Klien */
+
+#page4 h1 {
+    color: #258D00;
+    font-family: 'jakartaSansExtraBold';
+    font-size: 3em;
+}
+
+#page4 .testimoni {
+    width: 55%;
+    margin-top: 80px;
+}
+
+#page4 .testimoni h3 {
+    color: #71EA45;
+    font-family: 'jakartaSansExtraBold';
+}
+
+
+/* Footer */
+/* Footer */
+footer {
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    
+}
+
+footer .container{
+    padding-left: 200px;
+}
+
+footer .menu h5 {
+    margin-bottom: 15px;
+}
+
+footer .menu ul li {
+    margin-bottom: 15px;
+}

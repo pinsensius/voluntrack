@@ -1,0 +1,17 @@
+footer {
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    
+}
+
+footer .container{
+    padding-left: 200px;
+}
+
+footer .menu h5 {
+    margin-bottom: 15px;
+}
+
+footer .menu ul li {
+    margin-bottom: 15px;
+}
