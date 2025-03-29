@@ -59,18 +59,18 @@
         <main id="page3">
             <div class="row">
                 <div class="col text-center founder-profile">
-                    <img src="../image/junior.png" alt="jun">
-                    <h4 class="mt-3">CEO</h4>
-                    <h5 class="mt-3">Muhammad Dekly Junior</h5>
+                    <img src="../image/andre.png" alt="jun">
+                    <h4 class="mt-3">UI/UX</h4>
+                    <h5 class="mt-3">Andre Pratama Milano</h5>
                 </div>
                 <div class="col text-center founder-profile">
                     <img src="../image/boy.png" alt="boy">
-                    <h4 class="mt-3">Founder</h4>
+                    <h4 class="mt-3">Back End / Lead</h4>
                     <h5 class="mt-3">Vinsesius Boido S</h5>
                 </div>
                 <div class="col text-center founder-profile">
                     <img src="../image/afri.png" alt="afri">
-                    <h4 class="mt-3">Founder</h4>
+                    <h4 class="mt-3">Front End</h4>
                     <h5 class="mt-3">Muhammad Afrizal</h5>
                 </div>
             </div>
@@ -80,82 +80,83 @@
                 <div class="col"">
                     <h1>Ulasan Dari Beberapa Klien Kami</h1>
                     <div class=" testimoni d-flex gap-5">
-                    <img src="../image/klien1.png" alt="klien">
-                    <div class="tes-text d-flex flex-column justify-content-between">
-                        <img src="../image/kutip.svg" alt="kutip" width="60px">
-                        <q>“Kami sangat terbantu dengan adanya web ini! Terimakasih Voluntrack”</q>
-                        <div class="d-flex">
-                            <div class="w-100 border-end">
-                                <h3>90%</h3>
-                                <span>kepuasan</span>
-                            </div>
-                            <div class="w-100 ms-5 text-center">
-                                <h3>140</h3>
-                                <span>Kegiatan Diikuti</span>
+                        <img src="../image/klien1.png" alt="klien">
+                        <div class="tes-text d-flex flex-column justify-content-between">
+                            <img src="../image/kutip.svg" alt="kutip" width="60px">
+                            <q>“Kami sangat terbantu dengan adanya web ini! Terimakasih Voluntrack”</q>
+                            <div class="d-flex">
+                                <div class="w-100 border-end">
+                                    <h3>90%</h3>
+                                    <span>kepuasan</span>
+                                </div>
+                                <div class="w-100 ms-5 text-center">
+                                    <h3>140</h3>
+                                    <span>Kegiatan Diikuti</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
-    </main>
+        </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row pt-5">
-                <div class="col-6">
-                    <div class="f-logo d-flex align-items-center ms-2 mb-3">
-                        <img src="../icon/1.svg" alt="logo">
-                        <h5 class="mb-0 ms-2 fw-bold">Voluntrack.</h5>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row pt-5">
+                    <div class="col-6">
+                        <div class="f-logo d-flex align-items-center ms-2 mb-3">
+                            <img src="../icon/1.svg" alt="logo">
+                            <h5 class="mb-0 ms-2 fw-bold">Voluntrack.</h5>
+                        </div>
+                        <p class="opacity-75 w-75 fs-6 ">Voluntrack: Platform donasi dan kegiatan relawan untuk
+                            lingkungan dan
+                            masyarakat. Memberikan edukasi dan kesempatan bagi pengguna untuk berkontribusi melalui
+                            donasi atau partisipasi langsung dalam kegiatan..</p>
                     </div>
-                    <p class="opacity-75 w-75 fs-6 ">Voluntrack: Platform donasi dan kegiatan relawan untuk lingkungan dan
-                        masyarakat. Memberikan edukasi dan kesempatan bagi pengguna untuk berkontribusi melalui
-                        donasi atau partisipasi langsung dalam kegiatan..</p>
-                </div>
-                <div class="col-3 d-flex justify-content-end
+                    <div class="col-3 d-flex justify-content-end
                 ">
-                    <div class="menu">
-                        <h5 class="fw-bold">Menu</h5>
-                        <ul class="list-unstyled opacity-75">
-                            <li>Beranda</li>
-                            <li>Kategori</li>
-                            <li>Kegiatan</li>
-                            <li>Edukasi</li>
-                            <li>Tentang Kami</li>
-                        </ul>
+                        <div class="menu">
+                            <h5 class="fw-bold">Menu</h5>
+                            <ul class="list-unstyled opacity-75">
+                                <li>Beranda</li>
+                                <li>Kategori</li>
+                                <li>Kegiatan</li>
+                                <li>Edukasi</li>
+                                <li>Tentang Kami</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end
+                ">
+                        <div class="menu">
+                            <h5 class="fw-bold">Legal</h5>
+                            <ul class="list-unstyled opacity-75">
+                                <li>Privacy</li>
+                                <li>Ketentuan</li>
+                                <li>Kontak</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-3 d-flex justify-content-end
-                ">
-                    <div class="menu">
-                        <h5 class="fw-bold">Legal</h5>
-                        <ul class="list-unstyled opacity-75">
-                            <li>Privacy</li>
-                            <li>Ketentuan</li>
-                            <li>Kontak</li>
-                        </ul>
+                <div class="row mt-5 pb-5 d-flex align-items-center">
+                    <div class="col-6">
+                        <p class="m-0 fw-bold">&copy;2024 VolunTrack. All right reserved.</p>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center gap-5">
+                        <img src="../icon/instagram.svg" alt="ig">
+                        <img src="../icon/github.svg" alt="github">
+                        <img src="../icon/x.svg" alt="x">
+                        <img src="../icon/linkedin.svg" alt="linkedin">
                     </div>
                 </div>
             </div>
-            <div class="row mt-5 pb-5 d-flex align-items-center">
-                <div class="col-6">
-                    <p class="m-0 fw-bold">&copy;2024 VolunTrack. All right reserved.</p>
-                </div>
-                <div class="col-6 d-flex justify-content-center gap-5">
-                    <img src="../icon/instagram.svg" alt="ig">
-                    <img src="../icon/github.svg" alt="github">
-                    <img src="../icon/x.svg" alt="x">
-                    <img src="../icon/linkedin.svg" alt="linkedin">
-                </div>
-            </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
