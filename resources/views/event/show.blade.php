@@ -5,6 +5,9 @@
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <link rel="stylesheet" href="{{ asset('css/eventDetail.css') }}">
         <link rel="stylesheet" href="{{ asset('css/font.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+            integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             #map {
                 border-radius: 10px;
@@ -24,8 +27,8 @@
             <div class="col-8 left">
                 <div class="more-img mt-3 d-flex justify-content-between me-4 border" style="height: 400px;">
                     @foreach (json_decode($event->event_image) as $image)
-                    <img src="{{ asset('storage/' . $image) }}" class="w-100 h-100 rounded-lg" alt="Event Image"
-                        style="object-fit: cover;">
+                        <img src="{{ asset('storage/' . $image) }}" class="w-100 h-100 rounded-lg" alt="Event Image"
+                            style="object-fit: cover;">
                     @endforeach
                 </div>
             </div>
@@ -33,13 +36,13 @@
                 <h4>{{ $event->nama }}</h4>
                 <p class="mt-4" style="font-size: 1.1em;">Detail Kegiatan</p>
                 <p>Waktu :</p>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">{{
-                    \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }} - {{
-                    \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</p>
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }} -
+                    {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</p>
 
                 <p>Alamat :</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400"><span class="font-medium text-blue-500">{{
-                        $event->alamat }}</span></p>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><span
+                        class="font-medium text-blue-500">{{ $event->alamat }}</span></p>
                 <div id="map" style="height: 200px; width: 100%;"></div>
 
                 <p class="mt-4" style="font-size: 1.1em;">Kategori Kegiatan :</p>
@@ -56,38 +59,44 @@
                     </div>
                 </div>
                 @if ($event->progress_event != 100)
-                <div class="mt-8 mb-3">
-                    <a href="{{ route('donasi', ['event' => $event->id_event]) }}"
-                        class="inline-block bg-[#AEF161] text-black px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-500 transition duration-300 w-full text-center no-underline ">
-                        Donasi Sekarang
+                    <div class="mt-8 mb-3">
+                        <a href="{{ route('donasi', ['event' => $event->id_event]) }}"
+                            class="inline-block bg-[#AEF161] text-black px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-500 transition duration-300 w-full text-center no-underline ">
+                            Donasi Sekarang
 
-                    </a>
-                </div>
-
+                        </a>
+                    </div>
                 @endif
+                {{-- button daftar --}}
                 @if ($event->relawan->contains('user_id', auth()->id()))
-                <div class="mt-8">
-                    <p class="text-green-500">Anda sudah menjadi relawan untuk event ini!</p>
-                </div>
-                           @else
-                @if(auth()->user()->canany(['relawan-daftar']))
-                @if (auth()->user()->nik && auth()->user()->no_hp && auth()->user()->alamat && auth()->user()->ktp)
-                <div class="mt-8">
-                    <a href="{{ route('relawan.daftar', ['event' => $event->id_event]) }}"
-                        class="w-full inline-block text-center no-underline bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-500 transition duration-300">
-                        Daftar sebagai Relawan
-                    </a>
-                </div>
+                    <div class="mt-8">
+                        <p class="text-green-500">Anda sudah menjadi relawan untuk event ini!</p>
+                    </div>
                 @else
+                    @if (auth()->user()->canany(['relawan-daftar']))
+                        @if (auth()->user()->nik && auth()->user()->no_hp && auth()->user()->alamat && auth()->user()->ktp)
+                            <div class="mt-8">
+                                <a href="{{ route('relawan.daftar', ['event' => $event->id_event]) }}"
+                                    class="w-full inline-block text-center no-underline bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-500 transition duration-300">
+                                    Daftar sebagai Relawan
+                                </a>
+                            </div>
+                        @else
+                            <div class="mt-8">
+                                <a href="{{ route('profile.edit') }}"
+                                    class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-500 transition duration-300 w-full no-underline text-center">
+                                    Lengkapi Profil untuk Mendaftar
+                                </a>
+                            </div>
+                        @endif
+                    @endif
+                @endif
                 <div class="mt-8">
-                    <a href="{{ route('profile.edit') }}"
-                        class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-500 transition duration-300 w-full no-underline text-center">
-                        Lengkapi Profil untuk Mendaftar
+                    <a href=""
+                        class="w-full inline-block text-center no-underline bg-[#F3FFEB] text-[#7E9C5C] border-2 border-[#7E9C5C] px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#AEF161] hover:text-white transition duration-300">
+                        <i class="fa-solid fa-vr-cardboard"></i> Lihat Lokasi
                     </a>
                 </div>
-                @endif
-                @endif
-                @endif
 
                 <form action="../Form Regist Join Event/join-event.php" method="post" class="daftarRelawan">
                     <input type="hidden" name="event_id" value="$eventId">
@@ -117,12 +126,12 @@
                 <div class="mt-6">
                     <ol class="list-inside list-decimal">
                         @foreach ($relawans as $relawan)
-                        <li class="text-gray-600 dark:text-gray-400">{{ $relawan->nama_lengkap }}</li>
+                            <li class="text-gray-600 dark:text-gray-400">{{ $relawan->nama_lengkap }}</li>
                         @endforeach
                     </ol>
-                              
+
+                </div>
             </div>
-        </div>
         </div>
     </main>
 
@@ -131,24 +140,24 @@
 
 
     @if ($event->latitude && $event->longitude)
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const latitude = @json($event -> latitude);
-            const longitude = @json($event -> longitude);
-            const map = L.map('map').setView([latitude, longitude], 13);
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const latitude = @json($event->latitude);
+                const longitude = @json($event->longitude);
+                const map = L.map('map').setView([latitude, longitude], 13);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
-            L.marker([latitude, longitude]).addTo(map).bindPopup('Lokasi Kegiatan!').openPopup();
+                L.marker([latitude, longitude]).addTo(map).bindPopup('Lokasi Kegiatan!').openPopup();
 
-            window.addEventListener("resize", function () {
-                map.invalidateSize();
+                window.addEventListener("resize", function() {
+                    map.invalidateSize();
+                });
             });
-        });
-    </script>
+        </script>
     @else
-    <p class="text-gray-600 dark:text-gray-400">Lokasi tidak tersedia.</p>
+        <p class="text-gray-600 dark:text-gray-400">Lokasi tidak tersedia.</p>
     @endif
 </x-app-layout>
