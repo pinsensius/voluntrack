@@ -121,7 +121,7 @@
                             &#x2794; </a></p>
                 </div>
             </div>
-            <div class="row gap-4" style="margin-top: 50px;">
+            <div class="row gap-4 " style="margin-top: 50px; max-width: 33%;">
                     @forelse ($data as $event)
 
                     @if ($event->status === 'approved')

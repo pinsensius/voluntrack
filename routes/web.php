@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/merchant', ItemController::class);
-    Route::put('/merchant/{item}', [ItemController::class, 'update'])->name('merchant.update'); 
+    Route::put('/merchant/{item}', [ItemController::class, 'update'])->name('merchant.update');
     Route::resource('/comment', CommentController::class);
 
     Route::resource('/topic', TopicController::class);
@@ -147,6 +147,10 @@ Route::get('/registRelawan', function () {
 Route::get('/forgetpw', function () {
     return view('forgetpw');
 })->name('forgetpw');
+
+Route::get('/aturEvent', function () {
+    return view('aturEvent');
+})->name('aturEvent');
 
 
 Route::post('/payment', [ItemController::class, 'createPayment'])->name('payment.create');
