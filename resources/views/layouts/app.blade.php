@@ -21,17 +21,24 @@
 </head>
 
 <body class="font-sans antialiased">
-    <x-navbar />
+    {{-- cek jika yang login adalah admin, maka yang muncul adalah x-navbarAdmin --}}
+    @if (Auth::user()->role == 'admin')
+        <x-navbarAdmin />
+    @else
+        <x-navbar />
+    @endif
     <div class="min-h-screen">
 
         <!-- Page Heading -->
-        <!-- @isset($header) -->
-        <!-- <header class="bg-white dark:bg-gray-800 shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header> -->
-        <!-- @endisset -->
+        <!-- @isset($header)
+    -->
+            <!-- <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header> -->
+            <!--
+@endisset -->
 
         <!-- Page Content -->
         <main>
