@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [UserController::class, 'home']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+// route untuk halaman utama
+Route::get('/dashboardAdmin', function () {
+    return view('/admin/dashboardAdmin');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/home', [UserController::class, 'dashboard']);
@@ -57,6 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/donasi/{event}', [DonasiController::class, 'create'])->name('donasi');
 
     Route::prefix('admin')->name('admin.')->group(function () {
+        // route untuk halaman admin
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
         Route::prefix('event')->name('event.')->group(function () {
