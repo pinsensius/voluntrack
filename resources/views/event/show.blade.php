@@ -32,6 +32,7 @@
                     @endforeach
                 </div>
             </div>
+            {{-- kanan --}}
             <div class="col-4 right">
                 <h4>{{ $event->nama }}</h4>
                 <p class="mt-4" style="font-size: 1.1em;">Detail Kegiatan</p>
@@ -114,7 +115,7 @@
     </main>
 
     <main id="page2">
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-8">
                 <p class="deskripsi">Deskripsi Kegiatan</p>
                 <p>{{ $event->event_detail }}</p>
@@ -129,7 +130,16 @@
                             <li class="text-gray-600 dark:text-gray-400">{{ $relawan->nama_lengkap }}</li>
                         @endforeach
                     </ol>
+                </div>
 
+                {{-- para donatur --}}
+                <p class="para-relawan mt-5">Para Donatur</p>
+                <div class="mt-6 bg-slate-100 rounded-md h-40 overflow-y-auto">
+                    <p>1</p>
+                    <p>1</p>
+                    <p>1</p>
+                    <p>1</p>
+                    <p>1</p>
                 </div>
             </div>
         </div>
