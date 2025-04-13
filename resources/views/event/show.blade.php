@@ -33,7 +33,7 @@
                 </div>
             </div>
             {{-- kanan --}}
-            <div class="col-4 right">
+            <div class="col-4 right shadow-md">
                 <h4>{{ $event->nama }}</h4>
                 <p class="mt-4" style="font-size: 1.1em;">Detail Kegiatan</p>
                 <p>Waktu :</p>
@@ -99,6 +99,19 @@
                     </a>
                 </div>
 
+                {{-- para donatur --}}
+                <p class="mt-5">Para Donatur :</p>
+                <div class="mt-6 p-2 bg-slate-100 rounded-md h-56 overflow-y-auto font-bold">
+                    <p>Udin</p>
+                    <p>Asep nige</p>
+                    <p>Kentang</p>
+                    <p>Rembo</p>
+                    <p>Amirudin</p>
+                    <p>Udin</p>
+                    <p>Asep nige</p>
+                    <p>Kentang</p>
+                </div>
+
                 <form action="../Form Regist Join Event/join-event.php" method="post" class="daftarRelawan">
                     <input type="hidden" name="event_id" value="$eventId">
                 </form>
@@ -132,15 +145,6 @@
                     </ol>
                 </div>
 
-                {{-- para donatur --}}
-                <p class="para-relawan mt-5">Para Donatur</p>
-                <div class="mt-6 bg-slate-100 rounded-md h-40 overflow-y-auto">
-                    <p>1</p>
-                    <p>1</p>
-                    <p>1</p>
-                    <p>1</p>
-                    <p>1</p>
-                </div>
             </div>
         </div>
     </main>
