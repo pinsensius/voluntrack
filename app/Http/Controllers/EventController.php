@@ -44,9 +44,8 @@ class EventController extends Controller implements HasMiddleware
             $event->progress_event = $persentaseDonasi;
 
             $event->save();
-
-            
         }
+
 
         return view('event.index', compact('events'));
 
@@ -116,7 +115,9 @@ class EventController extends Controller implements HasMiddleware
     {
         // session(['event_id' => $event->id_event]);
         $relawans = Relawan::where('event_id', $event->id_event)->latest()->get();
-        return view('event.show', compact('event', 'relawans'));   
+        $donaturs = Donasi::with('user')->where('event_id', $event->id_event)->latest()->get()->unique('donatur');
+
+        return view('event.show', compact('event', 'relawans', 'donaturs'));   
     }
 
     /**

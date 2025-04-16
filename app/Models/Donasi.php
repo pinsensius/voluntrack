@@ -18,7 +18,7 @@ class Donasi extends Model
         'transaction_status',
     ];
 
-    public function donatur():BelongsTo
+    public function user():BelongsTo
     {
         return $this->belongsTo(User::class, 'donatur');
     }

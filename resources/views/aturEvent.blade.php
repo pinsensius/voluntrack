@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Event Approval') }}
+        </h2>
+    </x-slot>
     <style>
         .Events .row:nth-child(odd) {
             background-color: #f0f0f0;
@@ -44,7 +43,6 @@
 
 <body>
     <div class="container-fluid">
-        <x-navbar />
         <div class="mt-5" style="padding: 0 120px;">
             <h2 class="fw-bold">Atur Event Yuk!</h2>
             <div class="dropdown mt-4">
@@ -61,73 +59,54 @@
                 </ul>
             </div>
             <div class="Events d-flex flex-column gap-4 mt-5">
+                @foreach ($events as $event)
                 <div class="row  w-100">
                     <div class="col d-flex justify-content-between align-items-center">
-                        <img src="{{ asset('image/defaultProfile.png') }}" alt="profile" width="40">
-                        <h5>MARI HIJAUKAN BUMI!!</h5>
+                        <img src="{{ asset('storage/' . json_decode($event->event_image)[0]) }}" alt="profile" width="40">
+                        <h5>{{$event->nama}}</h5>
                         <div class="status">
                             <div class="round d-flex gap-2">
+                                @if($event->status == "pending")
                                 <svg width="20" height="20">
-                                    <circle cx="10" cy="10" r="5" fill="lightgreen" />
+                                    <circle cx="10" cy="10" r="5" fill="yellow" />
                                 </svg>
-                                <h6 class="fw-bold">Sedang Berjalan</h6>
+                                @elseif($event->status == "rejected")
+                                <svg width="20" height="20">
+                                    <circle cx="10" cy="10" r="5" fill="red" />
+                                </svg>
+                                @elseif($event->status == "approved")
+                                <svg width="20" height="20">
+                                    <circle cx="10" cy="10" r="5" fill="green" />
+                                </svg>
+                                @endif
+                                <h6 class="fw-bold">{{ $event->status}}</h6>
                             </div>
                         </div>
                         <div class="button-action d-flex gap-4">
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Lihat Formulir</button>
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Izinkan</button>
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Hentikan</button>
+                            @if (auth()->user()->canany(['admin-show']))
+                            <button class="rounded-3 px-4 py-2" style="width: 33%;">
+                                <a href="{{ route('admin.event.show', $event->id_event) }}"
+                                    class="text-blue-600 dark:text-blue-400 hover:text-blue-500">View Details</a>
+                            </button>
+                            @endif
+                            @if (auth()->user()->canany(['admin-approve', 'admin-reject']))
+                            <form action="{{ route('admin.event.approve', $event->id_event) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="rounded-3 px-4 py-2" style="width: 33%;">Izinkan</button>
+                            </form>
+                            <form action="{{ route('admin.event.reject', $event->id_event) }}" method="POST"
+                                onsubmit="return confirm('Are you sure to reject this event?');">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="rounded-3 px-4 py-2" style="width: 33%;">Hentikan</button>
+                            </form>
+                            @endif
                         </div>
                     </div>
                 </div>
-                <div class="row  w-100">
-                    <div class="col d-flex justify-content-between align-items-center">
-                        <img src="{{ asset('image/defaultProfile.png') }}" alt="profile" width="40">
-                        <h5>MARI HIJAUKAN BUMI!!</h5>
-                        <div class="status">
-                            <div class="round d-flex gap-2">
-                                <svg width="20" height="20">
-                                    <circle cx="10" cy="10" r="5" fill="lightgreen" />
-                                </svg>
-                                <h6 class="fw-bold">Sedang Berjalan</h6>
-                            </div>
-                        </div>
-                        <div class="button-action d-flex gap-4">
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Lihat Formulir</button>
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Izinkan</button>
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Hentikan</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row  w-100">
-                    <div class="col d-flex justify-content-between align-items-center">
-                        <img src="{{ asset('image/defaultProfile.png') }}" alt="profile" width="40">
-                        <h5>MARI HIJAUKAN BUMI!!</h5>
-                        <div class="status">
-                            <div class="round d-flex gap-2">
-                                <svg width="20" height="20">
-                                    <circle cx="10" cy="10" r="5" fill="lightgreen" />
-                                </svg>
-                                <h6 class="fw-bold">Sedang Berjalan</h6>
-                            </div>
-                        </div>
-                        <div class="button-action d-flex gap-4">
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Lihat Formulir</button>
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Izinkan</button>
-                            <button class="rounded-3 px-4 py-2" style="width: 33%;">Hentikan</button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+</x-app-layout>

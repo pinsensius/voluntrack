@@ -59,57 +59,56 @@
                         </p>
                     </div>
                 </div>
-                @if ($event->progress_event != 100)
-                    <div class="mt-8 mb-3">
-                        <a href="{{ route('donasi', ['event' => $event->id_event]) }}"
-                            class="inline-block bg-[#AEF161] text-black px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-500 transition duration-300 w-full text-center no-underline ">
-                            Donasi Sekarang
 
-                        </a>
-                    </div>
-                @endif
-                {{-- button daftar --}}
-                @if ($event->relawan->contains('user_id', auth()->id()))
-                    <div class="mt-8">
-                        <p class="text-green-500">Anda sudah menjadi relawan untuk event ini!</p>
-                    </div>
-                @else
-                    @if (auth()->user()->canany(['relawan-daftar']))
-                        @if (auth()->user()->nik && auth()->user()->no_hp && auth()->user()->alamat && auth()->user()->ktp)
-                            <div class="mt-8">
-                                <a href="{{ route('relawan.daftar', ['event' => $event->id_event]) }}"
-                                    class="w-full inline-block text-center no-underline bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-500 transition duration-300">
-                                    Daftar sebagai Relawan
-                                </a>
-                            </div>
-                        @else
-                            <div class="mt-8">
-                                <a href="{{ route('profile.edit') }}"
-                                    class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-500 transition duration-300 w-full no-underline text-center">
-                                    Lengkapi Profil untuk Mendaftar
-                                </a>
-                            </div>
+                @if (auth()->id() != $event->host)
+                    @if ($event->progress_event != 100)
+                        <div class="mt-8 mb-3">
+                            <a href="{{ route('donasi', ['event' => $event->id_event]) }}"
+                                class="inline-block bg-[#AEF161] text-black px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-500 transition duration-300 w-full text-center no-underline ">
+                                Donasi Sekarang
+
+                            </a>
+                        </div>
+                    @endif
+                    {{-- button daftar --}}
+                    @if ($event->relawan->contains('user_id', auth()->id()))
+                        <div class="mt-8">
+                            <p class="text-green-500">Anda sudah menjadi relawan untuk event ini!</p>
+                        </div>
+                    @else
+                        @if (auth()->user()->canany(['relawan-daftar']))
+                            @if (auth()->user()->nik && auth()->user()->no_hp && auth()->user()->alamat && auth()->user()->ktp)
+                                <div class="mt-8">
+                                    <a href="{{ route('relawan.daftar', ['event' => $event->id_event]) }}"
+                                        class="w-full inline-block text-center no-underline bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-500 transition duration-300">
+                                        Daftar sebagai Relawan
+                                    </a>
+                                </div>
+                            @else
+                                <div class="mt-8">
+                                    <a href="{{ route('profile.edit') }}"
+                                        class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-500 transition duration-300 w-full no-underline text-center">
+                                        Lengkapi Profil untuk Mendaftar
+                                    </a>
+                                </div>
+                            @endif
                         @endif
                     @endif
-                @endif
                 <div class="mt-8">
                     <a href=""
                         class="w-full inline-block text-center no-underline bg-[#F3FFEB] text-[#7E9C5C] border-2 border-[#7E9C5C] px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#AEF161] hover:text-white transition duration-300">
                         <i class="fa-solid fa-vr-cardboard"></i> Lihat Lokasi
                     </a>
                 </div>
+                @endif
+
 
                 {{-- para donatur --}}
                 <p class="mt-5">Para Donatur :</p>
                 <div class="mt-6 p-2 bg-slate-100 rounded-md h-56 overflow-y-auto font-bold">
-                    <p>Udin</p>
-                    <p>Asep nige</p>
-                    <p>Kentang</p>
-                    <p>Rembo</p>
-                    <p>Amirudin</p>
-                    <p>Udin</p>
-                    <p>Asep nige</p>
-                    <p>Kentang</p>
+                    @foreach ($donaturs as $donatur)
+                           <p>{{$donatur->user->username ?? "Anonim"}}</p> 
+                    @endforeach
                 </div>
 
                 <form action="../Form Regist Join Event/join-event.php" method="post" class="daftarRelawan">
