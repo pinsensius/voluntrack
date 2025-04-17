@@ -35,7 +35,7 @@
                         <img src="{{ asset('storage/' . Auth::user()->profile) }}" alt="Profil"
                             style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
                         @else
-                        <img src="{{asset('image/defaultProfile.png')}}" alt=""
+                        <img src="{{ asset('image/defaultProfile.png')}}" alt="default"
                             style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
                                   @endif
                         <span class="fw-bold">{{ Auth::user()->username }}</span>
