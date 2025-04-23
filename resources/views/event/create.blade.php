@@ -71,8 +71,16 @@
 
                 <div class="mb-4">
                     <label for="event_image" class="block text-sm font-medium ">Upload Gambar Event</label>
-                    <input type="file" name="event_image[]" id="event_image" class="mt-1 block w-full px-4 py-2  bg-gray-200 rounded-md @error('event_image') border-red-500 @enderror" multiple>
+                    <input type="file" name="event_image[]" id="event_image" accept="image/*" class="mt-1 block w-full px-4 py-2  bg-gray-200 rounded-md @error('event_image') border-red-500 @enderror" multiple>
                     @error('event_image')
+                    <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="vr_image" class="block text-sm font-medium ">Upload Gambar Event 360</label>
+                    <input type="file" name="vr_image" id="vr_image" accept="image/*" class="mt-1 block w-full px-4 py-2  bg-gray-200 rounded-md @error('vr_image') border-red-500 @enderror">
+                    @error('vr_image')
                     <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
                 </div>
@@ -129,7 +137,6 @@
                 document.getElementById('latitude').value = lat;
                 document.getElementById('longitude').value = lng;
 
-                // Ambil alamat menggunakan reverse geocoding
                 fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
                     .then(response => response.json())
                     .then(data => {

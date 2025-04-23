@@ -69,11 +69,12 @@ class EventController extends Controller implements HasMiddleware
         $request->validate([
             'event_image' => 'required',
             'event_image.*' => 'image|mimes:jpeg,jpg,png|max:2048',
+            'vr_image.*' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'host' => 'required|exists:users,id',
             'nama' => 'required|min:5|regex:/^[A-Za-z0-9\s]+$/|string',
             'tags' => 'required|in:lingkungan,kemanusiaan,olahraga|string',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date',
+            'tanggal_mulai' => 'required|date|after:today',
+            'tanggal_selesai' => 'required|date|after:today',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'event_detail' => 'required|string|min:10|max:2000',
@@ -90,8 +91,18 @@ class EventController extends Controller implements HasMiddleware
             }
         }
 
+        $vrImagePath = null;
+
+        if( $request->hasFile('vr_image')){
+            // dd($request->file('vr_image'));
+            $vrImagePath = $request->file('vr_image')->store('360', 'public');
+        }else{
+            echo "gambar gak masuk";
+        }
+
         Event::create([
             'event_image' => json_encode($imagePath),
+            'vr_image' => $vrImagePath,
             'host' => $request->host,
             'nama' => $request->nama,
             'tags' => $request->tags,
@@ -118,6 +129,7 @@ class EventController extends Controller implements HasMiddleware
         $donaturs = Donasi::with('user')->where('event_id', $event->id_event)->latest()->get()->unique('donatur');
 
         return view('event.show', compact('event', 'relawans', 'donaturs'));   
+
     }
 
     /**
@@ -137,58 +149,56 @@ class EventController extends Controller implements HasMiddleware
         $request->validate([
             'event_image' => 'required',
             'event_image.*' => 'image|mimes:jpeg,jpg,png|max:2048',
+            'vr_image.*' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'nama' => 'required|min:5|regex:/^[A-Za-z0-9\s]+$/|string',
             'tags' => 'required|in:lingkungan,kemanusiaan,olahraga|string',
             'tanggal_mulai' => 'required|date|after:today',
-            'tanggal_selesai' => 'required|date',
-            'lokasi' => 'required|string|min:3|max:255|regex:/^[A-Za-z0-9\s,.-]+$/',
+            'tanggal_selesai' => 'required|date|after:today',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'alamat' => 'required|string|min:3|max:255|regex:/^[A-Za-z0-9\s,.-]+$/',
             'event_detail' => 'required|string|min:10|max:2000',
             'requirement' => 'required|string|min:10|max:2000',
             'target_donasi' => 'required'
         ]);
 
-        
-
-        if($request->hasFile('event_image')){
-
-            if($event->event_image) {
+        if ($request->hasFile('event_image')) {
+            if ($event->event_image) {
                 $oldImages = json_decode($event->event_image, true);
-                foreach($oldImages as $oldImage) {
+                foreach ($oldImages as $oldImage) {
                     Storage::disk('public')->delete($oldImage);
                 }
-            }   
+            }
 
             $imagePath = [];
-            
-            foreach($request->file('event_image') as $image){
+            foreach ($request->file('event_image') as $image) {
                 $imagePath[] = $image->store('event', 'public');
             }
-    
-            
-    
-            $event->update([
-                'event_image' => json_encode($imagePath),
-                'nama' => $request->nama,
-                'tags' => $request->tags,
-                'tanggal_mulai' => $request->tanggal_mulai,
-                'tanggal_selesai' => $request->tanggal_selesai,
-                'lokasi' => $request->lokasi,
-                'event_detail' => $request->event_detail,
-                'requirement' => $request->requirement,
-                'target_donasi' => $request->target_donasi
-            ]);
-        }else{
-            $event->update([
-                'nama' => $request->nama,
-                'tags' => $request->tags,
-                'tanggal_mulai' => $request->tanggal_mulai,
-                'tanggal_selesai' => $request->tanggal_selesai,
-                'lokasi' => $request->lokasi,
-                'event_detail' => $request->event_detail,
-                'requirement' => $request->requirement,
-                'target_donasi' => $request->target_donasi
-            ]);
+
+            $event->event_image = json_encode($imagePath);
         }
+
+        if ($request->hasFile('vr_image')) {
+            if ($event->vr_image) {
+                Storage::disk('public')->delete($event->vr_image);
+            }
+
+            $vrImagePath = $request->file('vr_image')->store('360', 'public');
+            $event->vr_image = $vrImagePath;
+        }
+
+        $event->update([
+            'nama' => $request->nama,
+            'tags' => $request->tags,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'alamat' => $request->alamat,
+            'event_detail' => $request->event_detail,
+            'requirement' => $request->requirement,
+            'target_donasi' => $request->target_donasi
+        ]);
 
         return redirect()->route('event.index')->with(['success' => 'Data Berhasil Diubah!']);
     }

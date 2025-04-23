@@ -13,6 +13,7 @@ class Event extends Model
 
     protected $fillable = [
         'event_image',
+        'vr_image',
         'host',
         'tags',
         'nama',

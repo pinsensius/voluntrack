@@ -1,4 +1,13 @@
 <x-app-layout>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <style>
+            * {
+                color: black;
+            }
+        </style>
+    </head>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Update Event') }}
@@ -38,8 +47,11 @@
                 <!-- Lokasi -->
                 <div class="mb-4">
                     <label for="lokasi" class="block text-sm font-medium text-gray-200">Lokasi Event</label>
-                    <input type="text" name="lokasi" id="lokasi" class="mt-1 block w-full px-4 py-2 text-gray-800 bg-gray-200 rounded-md @error('lokasi') border-red-500 @enderror" placeholder="Masukkan lokasi event" value="{{ old('lokasi', $event->lokasi) }}">
-                    @error('lokasi')
+                    <div id="lokasi_map" class="w-full h-64 rounded-md shadow-md"></div>
+                    <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
+                    <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
+                    <input type="text" name="alamat" id="alamat" class="mt-1 block w-full px-4 py-2 text-gray-800 bg-gray-200 rounded-md @error('alamat') border-red-500 @enderror" placeholder="Masukkan lokasi event" value="{{ old('alamat', $event->alamat) }}">
+                    @error('alamat')
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
                 </div>
@@ -65,8 +77,17 @@
                 <!-- Event Image -->
                 <div class="mb-4">
                     <label for="event_image" class="block text-sm font-medium text-gray-200">Upload Gambar Event</label>
-                    <input type="file" name="event_image[]" id="event_image" class="mt-1 block w-full px-4 py-2 text-gray-800 bg-gray-200 rounded-md @error('event_image') border-red-500 @enderror" multiple>
+                    <input type="file" name="event_image[]" id="event_image" accept="image/*" class="mt-1 block w-full px-4 py-2 text-gray-800 bg-gray-200 rounded-md @error('event_image') border-red-500 @enderror" multiple>
                     @error('event_image')
+                        <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                 <!-- 360 Image -->
+                <div class="mb-4">
+                    <label for="vr_image" class="block text-sm font-medium ">Upload Gambar Event 360</label>
+                    <input type="file" name="vr_image" id="vr_image" accept="image/*" class="mt-1 block w-full px-4 py-2  bg-gray-200 rounded-md @error('vr_image') border-red-500 @enderror">
+                    @error('vr_image')
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
                 </div>
@@ -122,5 +143,55 @@
             .catch(error => {
                 console.error(error);
             });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const latitude = {{ $event->latitude ?? 0 }};
+            const longitude = {{ $event->longitude ?? 0 }};
+
+            const map = L.map('lokasi_map').setView([latitude, longitude], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+
+            let marker;
+
+            function updateMarker(lat, lng) {
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+                marker = L.marker([lat, lng], {
+                    draggable: true
+                }).addTo(map);
+                document.getElementById('latitude').value = lat;
+                document.getElementById('longitude').value = lng;
+
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const alamat = data.display_name || "Alamat tidak ditemukan";
+                        document.getElementById('lokasi').value = alamat;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching alamat:', error);
+                        document.getElementById('lokasi').value = "Gagal mendapatkan alamat";
+                    });
+
+                marker.on('dragend', function(e) {
+                    const position = marker.getLatLng();
+                    document.getElementById('latitude').value = position.lat;
+                    document.getElementById('longitude').value = position.lng;
+                    updateMarker(position.lat, position.lng);
+                });
+            }
+
+            updateMarker(latitude, longitude);
+
+            map.on('click', function(e) {
+                const lat = e.latlng.lat;
+                const lng = e.latlng.lng;
+                updateMarker(lat, lng);
+            });
+        });
     </script>
 </x-app-layout>

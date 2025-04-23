@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+        <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
         <style>
             #map {
                 border-radius: 10px;
@@ -30,6 +32,9 @@
                         <img src="{{ asset('storage/' . $image) }}" class="w-100 h-100 rounded-lg" alt="Event Image"
                             style="object-fit: cover;">
                     @endforeach
+                    @if($event->vr_image)
+                        <img src="{{ asset('storage/' . $event->vr_image) }}" class="w-100 h-100 rounded-lg" alt="Virtual Reality Event Image" style="object-fit: :cover">
+                    @endif
                 </div>
             </div>
             {{-- kanan --}}
@@ -129,6 +134,8 @@
     <main id="page2">
         <div class="row mb-5">
             <div class="col-8">
+                <div id="panorama" style="width: 100%; height: 500px;"></div>
+
                 <p class="deskripsi">Deskripsi Kegiatan</p>
                 <p>{{ $event->event_detail }}</p>
 
@@ -173,4 +180,12 @@
     @else
         <p class="text-gray-600 dark:text-gray-400">Lokasi tidak tersedia.</p>
     @endif
+
+    <script>
+        var viewer = pannellum.viewer('panorama', {
+            "type": "equirectangular",
+            "panorama": "{{ Storage::url($event->vr_image) }}", 
+            "autoLoad": true
+        });
+    </script>
 </x-app-layout>
