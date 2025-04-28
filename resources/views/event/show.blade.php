@@ -25,20 +25,24 @@
     </x-slot>
 
     <main id="page1" style="padding: 0;">
-        <div class="row">
-            <div class="col-8 left">
-                <div class="more-img mt-3 d-flex justify-content-between me-4 border" style="height: 400px;">
+        <div class=" flex flex-col lg:flex-row gap-4">
+            <div class="w-full left">
+                <div class="more-img justify-content-between me-4 border w-full rounded-lg">
                     @foreach (json_decode($event->event_image) as $image)
                         <img src="{{ asset('storage/' . $image) }}" class="w-100 h-100 rounded-lg" alt="Event Image"
                             style="object-fit: cover;">
                     @endforeach
-                    @if($event->vr_image)
-                        <img src="{{ asset('storage/' . $event->vr_image) }}" class="w-100 h-100 rounded-lg" alt="Virtual Reality Event Image" style="object-fit: :cover">
-                    @endif
+                    {{-- @if ($event->vr_image)
+                        <img src="{{ asset('storage/' . $event->vr_image) }}" class="w-100 h-100 rounded-lg"
+                            alt="Virtual Reality Event Image" style="object-fit: :cover">
+                    @endif --}}
+                </div>
+                <div class=" h-[500px] w-full mt-10 rounded-lg bg-black">
+                    <div id="panorama" class=" rounded-lg"></div>
                 </div>
             </div>
             {{-- kanan --}}
-            <div class="col-4 right shadow-md">
+            <div class="right shadow-md">
                 <h4>{{ $event->nama }}</h4>
                 <p class="mt-4" style="font-size: 1.1em;">Detail Kegiatan</p>
                 <p>Waktu :</p>
@@ -99,12 +103,12 @@
                             @endif
                         @endif
                     @endif
-                <div class="mt-8">
-                    <a href=""
-                        class="w-full inline-block text-center no-underline bg-[#F3FFEB] text-[#7E9C5C] border-2 border-[#7E9C5C] px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#AEF161] hover:text-white transition duration-300">
-                        <i class="fa-solid fa-vr-cardboard"></i> Lihat Lokasi
-                    </a>
-                </div>
+                    <div class="mt-8">
+                        <a href=""
+                            class="w-full inline-block text-center no-underline bg-[#F3FFEB] text-[#7E9C5C] border-2 border-[#7E9C5C] px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#AEF161] hover:text-white transition duration-300">
+                            <i class="fa-solid fa-vr-cardboard"></i> Lihat Lokasi
+                        </a>
+                    </div>
                 @endif
 
 
@@ -112,7 +116,7 @@
                 <p class="mt-5">Para Donatur :</p>
                 <div class="mt-6 p-2 bg-slate-100 rounded-md h-56 overflow-y-auto font-bold">
                     @foreach ($donaturs as $donatur)
-                           <p>{{$donatur->user->username ?? "Anonim"}}</p> 
+                        <p>{{ $donatur->user->username ?? 'Anonim' }}</p>
                     @endforeach
                 </div>
 
@@ -131,11 +135,10 @@
         </div>
     </main>
 
-    <main id="page2">
-        <div class="row mb-5">
-            <div class="col-8">
-                <div id="panorama" style="width: 100%; height: 500px;"></div>
 
+    <div class="row mb-5">
+        <div class="col-8">
+            <div class="mt-4">
                 <p class="deskripsi">Deskripsi Kegiatan</p>
                 <p>{{ $event->event_detail }}</p>
 
@@ -143,17 +146,17 @@
                 <p>{{ $event->requirement }}</p>
 
                 <p class="para-relawan mt-5">Para Relawan</p>
-                <div class="mt-6">
-                    <ol class="list-inside list-decimal">
-                        @foreach ($relawans as $relawan)
-                            <li class="text-gray-600 dark:text-gray-400">{{ $relawan->nama_lengkap }}</li>
-                        @endforeach
-                    </ol>
-                </div>
-
             </div>
+            <div class="mt-6">
+                <ol class="list-inside list-decimal">
+                    @foreach ($relawans as $relawan)
+                        <li class="text-gray-600 dark:text-gray-400">{{ $relawan->nama_lengkap }}</li>
+                    @endforeach
+                </ol>
+            </div>
+
         </div>
-    </main>
+    </div>
 
     <!-- Akhir ui -->
 
@@ -184,7 +187,7 @@
     <script>
         var viewer = pannellum.viewer('panorama', {
             "type": "equirectangular",
-            "panorama": "{{ Storage::url($event->vr_image) }}", 
+            "panorama": "{{ Storage::url($event->vr_image) }}",
             "autoLoad": true
         });
     </script>
