@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    
 </head>
 
 <body>
@@ -29,41 +31,46 @@
                     @csrf
                     <!-- Name -->
                     <div class="mb-3">
-                        <label for="name" class="form-label">{{ __('Nama Pengguna') }} <span>*</span></label>
-                        <input type="text" class="form-control" id="name" name="username" value="{{ old('username') }}" maxlength="80" placeholder="Masukkan nama pengguna" required autofocus>
-                        @error('username') 
-                            <span class="text-danger">{{ $message }}</span>
+                        <label for="name" class="form-label">{{ __('Nama Pengguna') }} <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="username" value="{{ old('username') }}"
+                            maxlength="80" placeholder="Masukkan nama pengguna" required autofocus>
+                        @error('username')
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <!-- Email -->
                     <div class="mb-3">
-                        <label for="email" class="form-label">{{ __('Email') }} <span>*</span></label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" maxlength="255" placeholder="Masukkan email" required>
-                        @error('email') 
-                            <span class="text-danger">{{ $message }}</span>
+                        <label for="email" class="form-label">{{ __('Email') }} <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                            maxlength="255" placeholder="Masukkan email" required>
+                        @error('email')
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <!-- Password -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">{{ __('Kata Sandi') }} <span>*</span></label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi" required>
-                        @error('password') 
-                            <span class="text-danger">{{ $message }}</span>
+                        <label for="password" class="form-label">{{ __('Kata Sandi') }} <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Masukkan kata sandi" required>
+                        @error('password')
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <!-- Confirm Password -->
                     <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">{{ __('Konfirmasi Kata Sandi') }} <span>*</span></label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi kata sandi" required>
-                        @error('password_confirmation') 
-                            <span class="text-danger">{{ $message }}</span>
+                        <label for="password_confirmation" class="form-label">{{ __('Konfirmasi Kata Sandi') }}
+                            <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password_confirmation"
+                            name="password_confirmation" placeholder="Konfirmasi kata sandi" required>
+                        @error('password_confirmation')
+                        <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-3 w-100">{{ __('Daftar') }}</button>
+                    <button type="submit" class="btn btn-primary mt-3 w-100 text-black">{{ __('Daftar') }}</button>
                 </form>
 
                 <p class="text-center mt-3">Sudah punya akun? <a href="{{ route('login') }}">Masuk</a></p>
