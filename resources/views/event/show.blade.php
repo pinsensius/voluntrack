@@ -1,6 +1,7 @@
 <x-app-layout>
 
     <head>
+        <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <link rel="stylesheet" href="{{ asset('css/eventDetail.css') }}">
@@ -40,6 +41,12 @@
                 <div class=" h-[500px] w-full mt-10 rounded-lg bg-black">
                     <div id="panorama" class=" rounded-lg"></div>
                 </div>
+                <div id="vr-scene-container" style="display: none; height: 500px;" class="rounded-lg overflow-hidden">
+                    <a-scene vr-mode-ui="enabled: true" embedded>
+                        <a-sky src="{{ Storage::url($event->vr_image) }}"></a-sky>
+                    </a-scene>
+                </div>
+                
             </div>
             {{-- kanan --}}
             <div class="right shadow-md">
@@ -185,10 +192,33 @@
     @endif
 
     <script>
-        var viewer = pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": "{{ Storage::url($event->vr_image) }}",
-            "autoLoad": true
-        });
+        async function supportsWebXR() {
+            if (navigator.xr) {
+                try {
+                    const isVRSupported = await navigator.xr.isSessionSupported('immersive-vr');
+                    console.log("Web XR is Supported");
+                    return isVRSupported;
+                } catch (err) {
+                    console.warn("WebXR not supported:", err);
+                    return false;
+                }
+            }
+        return false;
+    }
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        const isVRAvailable = await supportsWebXR();
+
+        if (isVRAvailable) {
+            document.getElementById("vr-scene-container").style.display = "block";
+            document.getElementById("panorama").style.display = "none";
+        } else {
+            pannellum.viewer('panorama', {
+                "type": "equirectangular",
+                "panorama": "{{ Storage::url($event->vr_image) }}",
+                "autoLoad": true
+            });
+        }
+    });
     </script>
 </x-app-layout>
