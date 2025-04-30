@@ -192,17 +192,29 @@
     @endif
 
     <script>
-        async function supportsWebXR() {
-            if (navigator.xr) {
-                try {
-                    const isVRSupported = await navigator.xr.isSessionSupported('immersive-vr');
-                    console.log("Web XR is Supported");
-                    return isVRSupported;
-                } catch (err) {
-                    console.warn("WebXR not supported:", err);
-                    return false;
+    async function supportsWebXR() {
+        if (navigator.xr) {
+            try {
+                const isVRSupported = await navigator.xr.isSessionSupported('immersive-vr');
+                console.log("WebXR is Supported");
+                
+                if (isVRSupported) {
+                    try {
+                        const session = await navigator.xr.requestSession('immersive-vr');
+                        console.log("Perangkat VR berhasil terhubung");
+                        return true;
+                    } catch (err) {
+                        console.warn("Gagal memulai sesi VR:", err);
+                        return false;
+                    }
+                }else{
+                    console.log("VR tidak terkoneksi!");
                 }
+            } catch (err) {
+                console.warn("WebXR not supported:", err);
+                return false;
             }
+        }
         return false;
     }
 
