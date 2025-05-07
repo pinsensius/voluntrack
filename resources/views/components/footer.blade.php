@@ -1,7 +1,5 @@
-
-
 <footer>
-    <div class="container">
+    <div class="p-4">
         <div class="row pt-5">
             <div class="col-6">
                 <div class="f-logo d-flex align-items-center ms-2 mb-3">
@@ -54,4 +52,3 @@
 
 <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 <link rel="stylesheet" href="{{ asset('css/font.css') }}">
-
