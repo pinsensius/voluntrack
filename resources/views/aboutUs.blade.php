@@ -20,7 +20,9 @@
                 </div>
                 <div class="col right-text">
                     <h5>TENTANG KAMI</h5>
-                    <h1 class="mt-5">Mari Membantu Orang-orang di Seluruh Indonesia</h1>
+                    <div class="flex">
+                        <h1 class="mt-5">Mari Membantu Orang-orang di Seluruh Indonesia</h1>
+                    </div>
                     <div class="caption">
                         <p class="fs-6 w-75  opacity-75">Voluntrack adalah sebuah platform yang dibuat untuk membantu
                             antar
@@ -56,19 +58,23 @@
 
         <!-- Founder page -->
         <main id="page3">
-            <div class="row">
-                <div class="col text-center founder-profile">
-                    <img src="../image/andre.png" alt="jun">
+            <div class="d-flex flex-column flex-md-row flex-wrap justify-content-center">
+                <div
+                    class="col d-flex flex-column align-items-center justify-content-center text-center founder-profile">
+                    <img src="../image/andre.png" alt="andre" class="mb-3">
                     <h4 class="mt-3">UI/UX</h4>
                     <h5 class="mt-3">Andre Pratama Milano</h5>
                 </div>
-                <div class="col text-center founder-profile">
-                    <img src="../image/boy.png" alt="boy">
+
+                <div
+                    class="col d-flex flex-column align-items-center justify-content-center text-center founder-profile">
+                    <img src="../image/boy.png" alt="boy" class="mb-3">
                     <h4 class="mt-3">Back End / Lead</h4>
                     <h5 class="mt-3">Vinsesius Boido S</h5>
                 </div>
-                <div class="col text-center founder-profile">
-                    <img src="../image/afri.png" alt="afri">
+                <div
+                    class="col d-flex flex-column align-items-center justify-content-center text-center founder-profile">
+                    <img src="../image/afri.png" alt="afri" class="mb-3">
                     <h4 class="mt-3">Front End</h4>
                     <h5 class="mt-3">Muhammad Afrizal</h5>
                 </div>
@@ -100,57 +106,7 @@
         </main>
 
         <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="row pt-5">
-                    <div class="col-6">
-                        <div class="f-logo d-flex align-items-center ms-2 mb-3">
-                            <img src="../icon/1.svg" alt="logo">
-                            <h5 class="mb-0 ms-2 fw-bold">Voluntrack.</h5>
-                        </div>
-                        <p class="opacity-75 w-75 fs-6 ">Voluntrack: Platform donasi dan kegiatan relawan untuk
-                            lingkungan dan
-                            masyarakat. Memberikan edukasi dan kesempatan bagi pengguna untuk berkontribusi melalui
-                            donasi atau partisipasi langsung dalam kegiatan..</p>
-                    </div>
-                    <div class="col-3 d-flex justify-content-end
-                ">
-                        <div class="menu">
-                            <h5 class="fw-bold">Menu</h5>
-                            <ul class="list-unstyled opacity-75">
-                                <li>Beranda</li>
-                                <li>Kategori</li>
-                                <li>Kegiatan</li>
-                                <li>Edukasi</li>
-                                <li>Tentang Kami</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-3 d-flex justify-content-end
-                ">
-                        <div class="menu">
-                            <h5 class="fw-bold">Legal</h5>
-                            <ul class="list-unstyled opacity-75">
-                                <li>Privacy</li>
-                                <li>Ketentuan</li>
-                                <li>Kontak</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-5 pb-5 d-flex align-items-center">
-                    <div class="col-6">
-                        <p class="m-0 fw-bold">&copy;2024 VolunTrack. All right reserved.</p>
-                    </div>
-                    <div class="col-6 d-flex justify-content-center gap-5">
-                        <img src="../icon/instagram.svg" alt="ig">
-                        <img src="../icon/github.svg" alt="github">
-                        <img src="../icon/x.svg" alt="x">
-                        <img src="../icon/linkedin.svg" alt="linkedin">
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <x-footer />
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
