@@ -42,7 +42,7 @@
 
     <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div>
-            <button><a href="{{ route('dashboard') }}">Dashboard admin</a></button>
+            {{-- <button><a href="{{ route('dashboard') }}">Dashboard admin</a></button> --}}
         </div>
 
         <div class="Events d-flex flex-column gap-4 mt-5">
