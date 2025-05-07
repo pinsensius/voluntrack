@@ -16,10 +16,10 @@
         <div class="col-lg-8 d-flex justify-content-center">
             <div class="navigasi d-flex align-items-center">
                 <ul>
-                    <li><a href="{{ route('dashboard') }}">Dashboard admin</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="{{ route('dashboard') }}">Admin</a></li>
                     <li><a href="{{ route('admin.dashboard') }}">Approval</a></li>
-                    <li><a href="{{ Request::is('home') ? '#page2' : url('/home#page2') }}">###</a></li>
-                    <li><a href="{{ Request::is('home') ? '#page3' : url('/home#page3') }}">Kegiatan</a></li>
+                    {{-- <li><a href="{{ Request::is('home') ? '#page3' : url('/home#page3') }}">Kegiatan</a></li> --}}
                     <li><a href="{{ route('merchant.index') }}">Merchant</a></li>
                 </ul>
             </div>
