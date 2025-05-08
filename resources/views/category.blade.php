@@ -13,14 +13,18 @@
 
 <body>
     <div class="container-fluid">
-        <x-navbar />
+        @if (auth()->user() && auth()->user()->role == 'admin')
+            <x-navbarAdmin />
+        @else
+            <x-navbar />
+        @endif
         <main class="mb-5">
             <div class="row categories">
                 <div class="col cText">
                     <h5>KATEGORI</h5>
                 </div>
             </div>
-            <div class="row category gap-5">
+            <div class="row category gap-5 row-cols-1">
                 <div class="col">
                     <img src="../icon/alam.svg" alt="alam" width="50" height="50">
                     <h5>Bencana Alam</h5>
@@ -59,15 +63,15 @@
                 </div>
             </div>
         </main>
-        
+
 
         <x-footer />
     </div>
 
     <script src="category.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
