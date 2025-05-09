@@ -38,7 +38,7 @@
                             alt="Virtual Reality Event Image" style="object-fit: :cover">
                     @endif --}}
                 </div>
-                <div class=" h-[500px] w-full mt-10 rounded-lg bg-black">
+                <div class=" h-[500px] w-full mt-10 rounded-lg bg-black" id="panorama-container">
                     <div id="panorama" class=" rounded-lg"></div>
                 </div>
                 <div id="vr-scene-container" style="display: none; height: 500px;" class="rounded-lg overflow-hidden">
@@ -223,7 +223,7 @@
 
             if (isVRAvailable) {
                 document.getElementById("vr-scene-container").style.display = "block";
-                document.getElementById("panorama").style.display = "none";
+                document.getElementById("panorama-container").style.display = "none";
             } else {
                 pannellum.viewer('panorama', {
                     "type": "equirectangular",
