@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -57,5 +58,26 @@ class NewPasswordController extends Controller
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withInput($request->only('email'))
                         ->withErrors(['email' => __($status)]);
+    }
+
+    public function update(Request $request){
+        $request->validate([
+            'kode' => ['required'],
+            'newPassword' => ['required', 'min:6'],
+        ]);
+
+        $user = User::where('verification_code', $request->kode)->first();
+
+        if (!$user) {
+            echo "ASDasda";
+            return back()->withErrors(['kode' => 'Kode verifikasi tidak valid.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newPassword),
+            'verification_code' => null, 
+        ]);
+
+        return redirect()->route('login')->with('status', 'Password berhasil diubah. Silakan login.');
     }
 }

@@ -1,27 +1,48 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password Page</title>
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row d-flex align-items-center">
+            <div class="col-4 input-form p-5">
+                <!-- Logo dan judul -->
+                <div class="logo d-flex pt-2 pb-2 align-items-center justify-content-center">
+                    <img src="../icon/1.svg" alt="icon">
+                    <h5>Voluntrack.</h5>
+                </div>
+                <div class="welcome mt-5 text-center">
+                    <h5>Selamat Datang Kembali!</h5>
+                    <p>Silahkan masukan email anda</p>
+                </div>
+                @if (session('status'))
+                    <p style="color: green">{{ session('status') }}</p>
+                @endif
+                <!-- Form Reset password -->
+                <form method="POST" action="{{ route('password.send.code') }}">
+                    @csrf
+                    <!-- Kode input -->
+                    <label for="email" class="mb-1">E-mail</label>
+                    <input type="email" class="form-control mb-4" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Masukkan email">
+                    <button type="submit" class="btn btn-primary mt-3 text-dark">{{ __('Masuk') }}</button>
+                </form>
+                <!-- Confirmation link -->
+                <p>Tidak punya akun? <a href="{{ route('register') }}">Daftar disini</a></p>
+            </div>
+            <div class="col-8 d-flex justify-content-center align-items-center">
+                <img src="../image/bro.svg" alt="login">
+            </div>
+        </div>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-    
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>

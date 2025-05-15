@@ -45,8 +45,7 @@
                 @else
                 <!-- Jika User Belum Login -->
                 <button><a href="{{ route('login') }}" target="_blank">Masuk</a></button>
-                <button style="background-color: #AEF161; color: black;"><a href="{{ route('register') }}"
-                        target="_blank">Daftar</a></button>
+                <button style="background-color: #AEF161; color: black;"><a href="{{ route('register') }}">Daftar</a></button>
                 @endauth
             </div>
         </div>

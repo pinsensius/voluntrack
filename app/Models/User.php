@@ -28,7 +28,8 @@ class User extends Authenticatable
         'profile',
         'nik',
         'ktp',
-        'role'
+        'role',
+        'verificaton-code'
     ];
 
     /**
