@@ -24,10 +24,10 @@
         </h2>
     </x-slot>
 
-    <div class="container mx-auto px-6">
+    <div class="container mx-auto px-6 mt-5">
         <div class="row row1">
             <div class="col judul">
-                <h5>KEGIATAN</h5>
+                <h5 class="font-bold">KEGIATAN</h5>
             </div>
         </div>
         <div class="row row2">
@@ -75,7 +75,7 @@
 
 
         <!-- awal ui card -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5">
             @forelse ($events as $event)
             @if ($event->status === 'approved')
             <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">

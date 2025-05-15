@@ -28,16 +28,17 @@
 
 <body class="">
     <div class="container-fluid">
-        {{-- secara default, yang muncul x-navbar, tapi jika ada yang login dan ber role admin, maka yang muncul x-navbarAdmin --}}
+        {{-- secara default, yang muncul x-navbar, tapi jika ada yang login dan ber role admin, maka yang muncul
+        x-navbarAdmin --}}
         @if (auth()->user() && auth()->user()->role == 'admin')
-            <x-navbarAdmin />
+        <x-navbarAdmin />
         @else
-            <x-navbar />
+        <x-navbar />
         @endif
 
 
         <!-- Awal Main -->
-        <div id="page1" class="p-4">
+        <div id="page1">
             <!-- Page 1 -->
             <div class="row flex-column-reverse flex-md-row align-items-center">
                 <!-- Bagian Teks Kiri -->
@@ -77,7 +78,7 @@
         </div>
 
         <!-- Page 2 -->
-        <div id="page2" class="p-4">
+        <div id="page2">
             <div class="row categories d-flex flex-column flex-md-row">
                 <div class="col cText order-1 order-md-1">
                     <h5>KATEGORI</h5>
@@ -92,33 +93,33 @@
                 </div>
             </div>
 
-            <div class="row category justify-content-center text-center">
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+            <div class="row category justify-content-center text-center w-full flex-nowrap">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
+                    <div class="d-flex flex-column align-items-center text-center w-100">
                         <img src="{{ asset('icon/alam.svg') }}" alt="alam" width="50" height="50">
                         <h5 class="mt-2">Bencana Alam</h5>
                         <p>Donasi atau jadi relawan untuk membantu korban bencana alam</p>
                         <a href="#" class="fw-medium">Lihat Lebih Lanjut</a>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
+                    <div class="d-flex flex-column align-items-center text-center w-100">
                         <img src="{{ asset('icon/laut.svg') }}" alt="laut" width="50" height="50">
                         <h5 class="mt-2">#SELAMATKANLAUT</h5>
                         <p>Donasi atau jadi relawan untuk menyelamatkan laut</p>
                         <a href="#" class="fw-medium">Lihat Lebih Lanjut</a>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
+                    <div class="d-flex flex-column align-items-center text-center w-100">
                         <img src="{{ asset('icon/bayi.svg') }}" alt="bayi" width="50" height="50">
                         <h5 class="mt-2">Balita & Bayi Sakit</h5>
                         <p>Donasi untuk bantu menyembuhkan bayi yang sakit</p>
                         <a href="#" class="fw-medium">Lihat Lebih Lanjut</a>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex justify-content-center">
-                    <div class="d-flex flex-column align-items-center text-center">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
+                    <div class="d-flex flex-column align-items-center text-center w-100">
                         <img src="{{ asset('icon/panti.svg') }}" alt="panti" width="50" height="50">
                         <h5 class="mt-2">Panti Asuhan</h5>
                         <p>Donasi atau jadi relawan untuk membantu anak-anak panti asuhan</p>
@@ -128,10 +129,11 @@
             </div>
 
 
+
         </div>
 
         <!-- Page 3 -->
-        <div id="page3" class="p-4">
+        <div id="page3">
             <div class="row d-flex flex-column flex-md-row justify-content-between align-items-start mb-4">
                 <div class="col-12 col-md-6 cText">
                     <h5>KEGIATAN</h5>
@@ -151,58 +153,57 @@
 
             <div class="row">
                 @forelse ($data as $event)
-                    @if ($event->status === 'approved')
-                        <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
-                            <div class="card w-100 p-0 shadow-sm">
-                                @if (auth()->id() === $event->host)
-                                    <p class="text-success m-2">Status: {{ $event->status }}</p>
-                                @endif
-                                <a href="{{ route('event.show', $event->id_event) }}">
-                                    <img src="{{ asset('storage/' . json_decode($event->event_image)[0]) }}"
-                                        alt="{{ $event->nama }}" height="200" width="100%"
-                                        style="object-fit: cover;">
+                @if ($event->status === 'approved')
+                <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex">
+                    <div class="card w-100 p-0 shadow-sm">
+                        @if (auth()->id() === $event->host)
+                        <p class="text-success m-2">Status: {{ $event->status }}</p>
+                        @endif
+                        <a href="{{ route('event.show', $event->id_event) }}">
+                            <img src="{{ asset('storage/' . json_decode($event->event_image)[0]) }}"
+                                alt="{{ $event->nama }}" height="200" width="100%" style="object-fit: cover;">
+                        </a>
+                        <div class="p-3">
+                            <h5 class="fw-bold mb-2">
+                                <a href="{{ route('event.show', $event->id_event) }}"
+                                    class="text-dark text-decoration-none">
+                                    {{ $event->nama }}
                                 </a>
-                                <div class="p-3">
-                                    <h5 class="fw-bold mb-2">
-                                        <a href="{{ route('event.show', $event->id_event) }}"
-                                            class="text-dark text-decoration-none">
-                                            {{ $event->nama }}
-                                        </a>
-                                    </h5>
-                                    <p class="text-muted small mb-2">Hosted by: <span
-                                            class="fw-medium text-primary">{{ $event->user->username }}</span></p>
-                                    <div class="d-flex justify-content-between small text-muted mb-2">
-                                        <span><strong>Start:</strong>
-                                            {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }}</span>
-                                        <span><strong>End:</strong>
-                                            {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</span>
+                            </h5>
+                            <p class="text-muted small mb-2">Hosted by: <span class="fw-medium text-primary">{{
+                                    $event->user->username }}</span></p>
+                            <div class="d-flex justify-content-between small text-muted mb-2">
+                                <span><strong>Start:</strong>
+                                    {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }}</span>
+                                <span><strong>End:</strong>
+                                    {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</span>
+                            </div>
+                            <p class="text-muted small">
+                                {{ Str::limit(strip_tags($event->event_detail), 100) }}
+                            </p>
+                            <div class="mt-3">
+                                <p class="mb-1">Progress :</p>
+                                <div class="progress position-relative" style="height: 20px;">
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                        style="width: {{ $event->progress_event }}%;"
+                                        aria-valuenow="{{ $event->progress_event }}" aria-valuemin="0"
+                                        aria-valuemax="100">
                                     </div>
-                                    <p class="text-muted small">
-                                        {{ Str::limit(strip_tags($event->event_detail), 100) }}
-                                    </p>
-                                    <div class="mt-3">
-                                        <p class="mb-1">Progress :</p>
-                                        <div class="progress position-relative" style="height: 20px;">
-                                            <div class="progress-bar bg-success" role="progressbar"
-                                                style="width: {{ $event->progress_event }}%;"
-                                                aria-valuenow="{{ $event->progress_event }}" aria-valuemin="0"
-                                                aria-valuemax="100">
-                                            </div>
-                                            <span class="position-absolute start-0 ps-2 text-white fw-bold"
-                                                style="font-size: 12px;">
-                                                {{ $event->progress_event }}%
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <span class="position-absolute start-0 ps-2 text-white fw-bold"
+                                        style="font-size: 12px;">
+                                        {{ $event->progress_event }}%
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                    @endif
-                @empty
-                    <div class="col-12">
-                        <p class="text-success text-center mt-4">Waduh, saat ini tidak ada event yang sedang berjalan
-                        </p>
                     </div>
+                </div>
+                @endif
+                @empty
+                <div class="col-12">
+                    <p class="text-success text-center mt-4">Waduh, saat ini tidak ada event yang sedang berjalan
+                    </p>
+                </div>
                 @endforelse
             </div>
 
@@ -222,7 +223,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+        </script>
 </body>
 
 </html>

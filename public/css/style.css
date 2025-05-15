@@ -39,10 +39,12 @@ body {
 footer {
     margin-top: 170px;
     scroll-margin-top: 170px;
+    padding: 0 120px;
 }
 
 #page1 {
     scroll-margin-top: 170px;
+    padding: 0 120px;
 }
 
 .gradient {
@@ -240,7 +242,6 @@ main {
 #page2 .category > * {
     border: 1px solid black;
     height: 350px;
-    margin: 0 20px;
     border-radius: 10px;
     border-color: rgba(0, 0, 0, .1);
     box-shadow: 5px 5px 20px #ccc;
@@ -255,6 +256,8 @@ main {
 
 #page2 .category {
     margin-top: 50px;
+    gap: 10px;
+
 }
 
 #page2 .category h5 {

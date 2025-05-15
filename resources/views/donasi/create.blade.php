@@ -7,7 +7,7 @@
 
     <div class="container mx-auto py-12 px-6">
         <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-            <h3 class="text-3xl font-semibold text-gray-800 dark:text-white mb-4">Dukung Event {{ $event->nama }}</h3>
+            <h3 class="text-3xl font-semibold text-gray-800 mb-4">Dukung Event {{ $event->nama }}</h3>
 
             <p class="text-gray-600 dark:text-gray-400 mb-6">
                 Bantu kami untuk mencapai target donasi sebesar <span class="font-semibold text-green-600">{{ "Rp " . number_format($event->target_donasi,2,',','.') }}</span> untuk keberhasilan acara ini.
@@ -22,12 +22,12 @@
                     <input type="hidden" name="donatur" value="{{ auth()->id() }}">
                     <div class="flex justify-between items-center">
                         <label for="donationAmount" class="text-gray-600 dark:text-gray-400 text-lg">Jumlah Donasi:</label>
-                        <input type="number" id="donationAmount" name="amount" value="50000" min="10000" step="10000" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500" placeholder="Masukkan jumlah donasi">
+                        <input type="number" id="donationAmount" name="amount" value="50000" min="10000" step="10000" class="w-full bg-gray-100  border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-gray-800 focus:ring-2 focus:ring-blue-500" placeholder="Masukkan jumlah donasi">
                     </div>
 
                     <div class="flex justify-between items-center">
                         <label for="donationMessage" class="text-gray-600 dark:text-gray-400 text-lg">Pesan (Opsional):</label>
-                        <textarea id="donationMessage" name="message" rows="3" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500" placeholder="Tulis pesan Anda"></textarea>
+                        <textarea id="donationMessage" name="message" rows="3" class="w-full bg-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-gray-800 focus:ring-2 focus:ring-blue-500" placeholder="Tulis pesan Anda"></textarea>
                     </div>
 
                     <div class="flex justify-center mt-6">
