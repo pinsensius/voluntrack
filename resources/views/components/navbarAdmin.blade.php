@@ -20,7 +20,6 @@
                     <li><a href="{{ route('dashboard') }}">Admin</a></li>
                     <li><a href="{{ route('admin.dashboard') }}">Approval</a></li>
                     {{-- <li><a href="{{ Request::is('home') ? '#page3' : url('/home#page3') }}">Kegiatan</a></li> --}}
-                    <li><a href="{{ route('merchant.index') }}">Merchant</a></li>
                 </ul>
             </div>
         </div>

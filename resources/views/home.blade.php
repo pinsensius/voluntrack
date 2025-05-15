@@ -159,7 +159,7 @@
                         @if (auth()->id() === $event->host)
                         <p class="text-success m-2">Status: {{ $event->status }}</p>
                         @endif
-                        <a href="{{ route('event.show', $event->id_event) }}">
+                        <a href="{{ route('event.show', $event->id_event) }}" style="width: 100%; height: 200px;">
                             <img src="{{ asset('storage/' . json_decode($event->event_image)[0]) }}"
                                 alt="{{ $event->nama }}" height="200" width="100%" style="object-fit: cover;">
                         </a>

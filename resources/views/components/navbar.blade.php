@@ -20,7 +20,6 @@
                     <li><a href="{{ Request::is('home') ? '#page5' : url('/home#page5') }}">Tentang Kami</a></li>
                     <li><a href="{{ Request::is('home') ? '#page2' : url('/home#page2') }}">Kategori</a></li>
                     <li><a href="{{ Request::is('home') ? '#page3' : url('/home#page3') }}">Kegiatan</a></li>
-                    <li><a href="{{ route('merchant.index')}}">Merchant</a></li>
                 </ul>
             </div>
         </div>
