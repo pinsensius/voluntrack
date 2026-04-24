@@ -53,23 +53,25 @@
             <div class="row profile">
                 <div class="col-2">
 
-                    @if ( Auth::user()->profile)
+                    @if (Auth::user()->profile)
                         <img src="{{ asset('storage/' . Auth::user()->profile) }}" alt="Profil"
-                            style="width:179px;height:179px;border-radius: 100%" margin-right: 10px;" class="img-fluid border">
-                        @else
+                            style="width:179px;height:179px;border-radius: 100%" margin-right: 10px;"
+                            class="img-fluid border">
+                    @else
                         <img src="{{asset('image/defaultProfile.png')}}" alt=""
-                            style="width:179px;height:179px;border-radius: 100%" margin-right: 10px;" class="img-fluid border">
-                                  @endif
+                            style="width:179px;height:179px;border-radius: 100%" margin-right: 10px;"
+                            class="img-fluid border">
+                              @endif
 
 
                 </div>
                 <div class="col mt-4 ms-4">
                     <div class="names ps-5 d-flex justify-content-between pe-5 ">
                         @auth
-                        <div class="name">
-                            <h4 class="m-0">{{ Auth::user()->username }}</h4>
-                            <p>{{ Auth::user()->email }}</p>
-                        </div>
+                            <div class="name">
+                                <h4 class="m-0">{{ Auth::user()->username }}</h4>
+                                <p>{{ Auth::user()->email }}</p>
+                            </div>
                         @endauth
                         <div class="d-flex align-items-center gap-3">
 
@@ -83,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            
+
     </div>
     </main>
 

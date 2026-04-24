@@ -17,11 +17,11 @@ class EventController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:event-list|event-create|event-edit|event-delete', only : ['index','store']),
+            new Middleware('permission:event-list', only : ['index']),
             new Middleware('permission:event-create', only : ['create','store']),
             new Middleware('permission:event-edit', only : ['edit','update']),
             new Middleware('permission:event-delete', only : ['destroy']),
-            new Middleware('permission:event-show', only : ['show', 'edit'])
+            new Middleware('permission:event-show', only : ['show'])
         ];
     }
     /**

@@ -4,17 +4,22 @@
         <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <style>
-            .line-clamp-2 {
+            .line-clamp-2,
+            .line-clamp-3 {
                 display: -webkit-box;
-                -webkit-line-clamp: 2;
-                /* Membatasi maksimal 2 baris */
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                /* Memastikan teks tambahan tidak terlihat */
                 line-height: 1.5;
-                /* Atur tinggi baris */
+            }
+
+            .line-clamp-2 {
+                -webkit-line-clamp: 2;
                 min-height: calc(1.5em * 2);
-                /* Pastikan ruang minimal untuk 2 baris */
+            }
+
+            .line-clamp-3 {
+                -webkit-line-clamp: 3;
+                min-height: calc(1.5em * 3);
             }
         </style>
     </head>
@@ -64,7 +69,7 @@
                 <p>Ingin Membuat Kegiatan?
                     <u>
                         @if(auth()->user()->canany(['event-create']))
-                        <a href="{{ route('event.create') }}" style="color:#258D00; font-weight:bold">Buat disini</a>
+                            <a href="{{ route('event.create') }}" style="color:#258D00; font-weight:bold">Buat disini</a>
                         @endif
                     </u>
                 </p>
@@ -77,142 +82,107 @@
         <!-- awal ui card -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5">
             @forelse ($events as $event)
-            @if ($event->status === 'approved')
-            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+                @if ($event->status === 'approved' || auth()->id() === $event->host)
+                    @php
+                        $eventImages = json_decode($event->event_image);
+                        $cardImage = is_array($eventImages) && count($eventImages) ? $eventImages[0] : null;
+                    @endphp
 
+                    <div
+                        class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                        <div class="relative overflow-hidden">
+                            <a href="{{ route('event.show', $event->id_event) }}">
+                                <img src="{{ $cardImage ? asset('storage/' . $cardImage) : asset('images/default-event.jpg') }}"
+                                    alt="{{ $event->nama }}"
+                                    class="w-full h-64 object-cover transition duration-500 ease-in-out transform group-hover:scale-105">
+                            </a>
+                            <div
+                                class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent p-4">
+                                <span
+                                    class="inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-800 bg-emerald-100 rounded-full dark:bg-emerald-900 dark:text-emerald-200">
+                                    {{ ucfirst($event->tags) }}
+                                </span>
+                            </div>
+                        </div>
 
-                @if (auth()->id() === $event->host)
-                <p class="text-green-500">Status : {{$event->status}}</p>
-                @endif
-                <a href="{{ route('event.show', $event->id_event) }}">
-                    <img src="{{ asset('storage/' . json_decode($event->event_image)[0]) }}" alt="{{ $event->nama }}"
-                        class="w-full h-48 object-cover">
-                </a>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 mt-2">
-                        <a href="{{ route('event.show', $event->id_event) }}"
-                            class="text-gray-900 no-underline font-bold">{{ $event->nama }}</a>
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Hosted by: <span
-                            class="font-medium text-blue-500">{{ $event->user->username }}</span></p>
-                    <div class="flex justify-between mt-4">
-                        <span class="text-gray-600 dark:text-gray-400 text-sm">Start: {{
-                            \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }}</span>
-                        <span class="text-gray-600 dark:text-gray-400 text-sm">End: {{
-                            \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</span>
-                    </div>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm">Location: <span
-                            class="font-medium text-blue-500">{{ $event->lokasi }}</span></p>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm line-clamp-2">{{
-                        Str::limit(strip_tags($event->event_detail), 100) }}</p>
-                    <div class="mt-2">
-                        <p>Progress :</p>
-                        <div class="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white">{{ $event->nama }}</h3>
+                                    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Hosted by
+                                        {{ $event->user->username }}</p>
+                                </div>
+                                @if ($event->status !== 'approved')
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-700 bg-yellow-100 rounded-full dark:bg-yellow-900 dark:text-yellow-200">
+                                        {{ ucfirst($event->status) }}
+                                    </span>
+                                @endif
+                            </div>
 
-                            <div class="abosulute top-0 left-0 h-6 bg-blue-500"
-                                style="width: {{ $event->progress_event}}%;"></div>
-                            <p class="text-sm text-gray-700 absolute top-0 left-1/2 transform -translate-x-1/2 mt-1">
-                                {{ $event->progress_event }}%
+                            <div class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                                <div class="flex flex-wrap gap-3">
+                                    <span class="inline-flex items-center gap-2">
+                                        {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }}
+                                    </span>
+                                    <span class="inline-flex items-center gap-2">
+                                        {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}
+                                    </span>
+                                </div>
+                                <div>
+                                    {{ $event->alamat ?? $event->lokasi }}
+                                </div>
+                            </div>
+
+                            <p class="mt-4 text-slate-600 dark:text-slate-300 text-sm line-clamp-3">
+                                {{ Str::limit(strip_tags($event->event_detail), 120) }}
                             </p>
+
+                            <div class="mt-5">
+                                <div class="flex items-center justify-between gap-4 text-sm text-slate-600 dark:text-slate-300">
+                                    <span class="font-semibold">Progress</span>
+                                    <span>{{ $event->progress_event }}%</span>
+                                </div>
+                                <div class="mt-2 h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                                    <div class="h-full rounded-full bg-emerald-500"
+                                        style="width: {{ $event->progress_event }}%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                <a href="{{ route('event.show', $event->id_event) }}"
+                                    class="inline-flex items-center justify-center rounded-full border border-emerald-500 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-500 hover:text-white transition">
+                                    View Details
+                                </a>
+
+                                @if (auth()->id() === $event->host)
+                                    <div class="flex flex-wrap gap-3">
+                                        @if(auth()->user()->canany(['event-edit']))
+                                            <a href="{{ route('event.edit', $event->id_event) }}"
+                                                class="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition">
+                                                Edit
+                                            </a>
+                                        @endif
+                                        @if(auth()->user()->canany(['event-delete']))
+                                            <form action="{{ route('event.destroy', $event->id_event) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="inline-flex items-center justify-center rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500 transition">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-
-
                     </div>
-
-                    @if (auth()->id() === $event->host)
-                    <div class="flex justify-between items-center mt-6">
-                        @if(auth()->user()->canany(['event-show']))
-                        <a href="{{ route('event.show', $event->id_event) }}"
-                            class="text-blue-600 dark:text-blue-400 hover:text-blue-500">View Details</a>
-                        @endif
-                        <div class="flex space-x-3">
-                            @if(auth()->user()->canany(['event-edit']))
-                            <a href="{{ route('event.edit', $event->id_event) }}"
-                                class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-500">Edit</a>
-                            @endif
-                            @if(auth()->user()->canany(['event-delete']))
-                            <form action="{{ route('event.destroy', $event->id_event) }}" method="POST"
-                                onsubmit="return confirm('Are you sure?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-500">Delete</button>
-                            </form>
-                            @endif
-                        </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-            @elseif ($event->status === 'pending' || $event->status === 'rejected')
-            <!-- Menampilkan event yang statusnya pending atau rejected hanya untuk host -->
-            @if (auth()->id() === $event->host)
-            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
-                @if (auth()->id() === $event->host)
-                <p class="text-green-500">Status : {{$event->status}}</p>
                 @endif
-                <a href="{{ route('event.show', $event->id_event) }}">
-                    <img src="{{ asset('storage/' . json_decode($event->event_image)[0]) }}" alt="{{ $event->nama }}"
-                        class="w-full h-48 object-cover">
-                </a>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2 mt-2">
-                        <a href="{{ route('event.show', $event->id_event) }}"
-                            class="text-gray-900 no-underline font-bold">{{ $event->nama }}</a>
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Hosted by: <span
-                            class="font-medium text-blue-500">{{ $event->user->username }}</span></p>
-                    <div class="flex justify-between mt-4">
-                        <span class="text-gray-600 dark:text-gray-400 text-sm">Start: {{
-                            \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }}</span>
-                        <span class="text-gray-600 dark:text-gray-400 text-sm">End: {{
-                            \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</span>
-                    </div>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm">Location: <span
-                            class="font-medium text-blue-500">{{ $event->lokasi }}</span></p>
-                    <p class="mt-4 text-gray-600 dark:text-gray-400 text-sm line-clamp-2">{{
-                        Str::limit(strip_tags($event->event_detail), 100) }}</p>
-                    <div class="mt-2">
-                        <p>Progress :</p>
-                        <div class="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden">
-
-                            <div class="abosulute top-0 left-0 h-6 bg-blue-500"
-                                style="width: {{ $event->progress_event}}%;"></div>
-                            <p class="text-sm text-gray-700 absolute top-0 left-1/2 transform -translate-x-1/2 mt-1">
-                                {{ $event->progress_event }}%
-                            </p>
-                        </div>
-
-
-                    </div>
-
-                    <div class="flex justify-between items-center mt-6">
-                        @if(auth()->user()->canany(['event-show']))
-                        <a href="{{ route('event.show', $event->id_event) }}"
-                            class="text-blue-600 dark:text-blue-400 hover:text-blue-500">View Details</a>
-                        @endif
-                        <div class="flex space-x-3">
-                            @if(auth()->user()->canany(['event-edit']))
-                            <a href="{{ route('event.edit', $event->id_event) }}"
-                                class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-500">Edit</a>
-                            @endif
-                            @if(auth()->user()->canany(['event-delete']))
-                            <form action="{{ route('event.destroy', $event->id_event) }}" method="POST"
-                                onsubmit="return confirm('Are you sure?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-500">Delete</button>
-                            </form>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-            @endif
             @empty
-            <p class="empty-event">Waduh, saat ini tidak ada event yang sedang berjalan.</p>
+                <p class="empty-event text-center text-slate-600 dark:text-slate-300">Waduh, saat ini tidak ada event yang
+                    sedang berjalan.</p>
             @endforelse
         </div>
 

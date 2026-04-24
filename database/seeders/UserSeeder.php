@@ -35,7 +35,13 @@ class UserSeeder extends Seeder
 
         // Define the permissions for the user role
         $permissionsUser = Permission::whereIn('name', [
-            'role-list', 'role-show'
+            'role-list',
+            'role-show',
+            'event-list',
+            'event-show',
+            'event-create',
+            'relawan-daftar',
+            'comment-store'
         ])->get();
         $userRole->syncPermissions($permissionsUser); // Assign specific permissions to user role
 

@@ -25,145 +25,164 @@
         </h2>
     </x-slot>
 
-    <main id="page1" style="padding: 0;">
-        <div class=" flex flex-col lg:flex-row gap-4">
-            <div class="w-full left">
-                <div class="more-img justify-content-between me-4 border w-full rounded-lg">
-                    @foreach (json_decode($event->event_image) as $image)
-                        <img src="{{ asset('storage/' . $image) }}" class="w-100 h-100 rounded-lg" alt="Event Image"
-                            style="object-fit: cover;">
-                    @endforeach
-                    {{-- @if ($event->vr_image)
-                        <img src="{{ asset('storage/' . $event->vr_image) }}" class="w-100 h-100 rounded-lg"
-                            alt="Virtual Reality Event Image" style="object-fit: :cover">
-                    @endif --}}
-                </div>
-                <div class=" h-[500px] w-full mt-10 rounded-lg bg-black" id="panorama-container">
-                    <div id="panorama" class=" rounded-lg"></div>
-                </div>
-                <div id="vr-scene-container" style="display: none; height: 500px;" class="rounded-lg overflow-hidden">
-                    <a-scene vr-mode-ui="enabled: true" embedded>
-                        <a-sky src="{{ Storage::url($event->vr_image) }}"></a-sky>
-                    </a-scene>
+    <main id="page1" class="max-w-7xl mx-auto px-4 py-8">
+        @php
+$images = json_decode($event->event_image, true) ?: [];
+$mainImage = $images[0] ?? null;
+        @endphp
+
+        <div class="flex flex-col gap-8 lg:flex-row">
+            <div class="w-full lg:w-2/3 space-y-6">
+                <div
+                    class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                    <img src="{{ $mainImage ? asset('storage/' . $mainImage) : asset('images/default-event.jpg') }}"
+                        alt="{{ $event->nama }}" class="w-full h-[420px] object-cover">
                 </div>
 
-            </div>
-            {{-- kanan --}}
-            <div class="right shadow-md">
-                <h4>{{ $event->nama }}</h4>
-                <p class="mt-4" style="font-size: 1.1em;">Detail Kegiatan</p>
-                <p>Waktu :</p>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">
-                    {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }} -
-                    {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</p>
-
-                <p>Alamat :</p>
-                <p class="text-sm text-gray-600 dark:text-gray-400"><span
-                        class="font-medium text-blue-500">{{ $event->alamat }}</span></p>
-                <div id="map" style="height: 200px; width: 100%;"></div>
-
-                <p class="mt-4" style="font-size: 1.1em;">Kategori Kegiatan :</p>
-                <div class="kategori kategori4 d-flex justify-content-center align-items-center">
-                    <span>{{ $event->tags }}</span>
-                </div>
-                <div class="progres pt-4">
-                    <div class="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden">
-                        <div class="absolute top-0 left-0 h-6 bg-blue-500"
-                            style="width: {{ $event->progress_event }}%;"></div>
-                        <p class="text-sm text-gray-700 absolute top-0 left-1/2 transform -translate-x-1/2 mt-1">
-                            {{ $event->progress_event }}%
-                        </p>
-                    </div>
-                </div>
-
-                @if (auth()->id() != $event->host)
-                    @if ($event->progress_event != 100)
-                        <div class="mt-8 mb-3">
-                            <a href="{{ route('donasi', ['event' => $event->id_event]) }}"
-                                class="inline-block bg-[#AEF161] text-black px-6 py-3 rounded-lg text-lg font-semibold hover:bg-green-500 transition duration-300 w-full text-center no-underline ">
-                                Donasi Sekarang
-
-                            </a>
-                        </div>
-                    @endif
-                    {{-- button daftar --}}
-                    @if ($event->relawan->contains('user_id', auth()->id()))
-                        <div class="mt-8">
-                            <p class="text-green-500">Anda sudah menjadi relawan untuk event ini!</p>
-                        </div>
-                    @else
-                        @if (auth()->user()->canany(['relawan-daftar']))
-                            @if (auth()->user()->nik && auth()->user()->no_hp && auth()->user()->alamat && auth()->user()->ktp)
-                                <div class="mt-8">
-                                    <a href="{{ route('relawan.daftar', ['event' => $event->id_event]) }}"
-                                        class="w-full inline-block text-center no-underline bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-500 transition duration-300">
-                                        Daftar sebagai Relawan
-                                    </a>
-                                </div>
-                            @else
-                                <div class="mt-8">
-                                    <a href="{{ route('profile.edit') }}"
-                                        class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-500 transition duration-300 w-full no-underline text-center">
-                                        Lengkapi Profil untuk Mendaftar
-                                    </a>
+                @if(count($images) > 1)
+                    <div class="grid grid-cols-3 gap-4">
+                        @foreach($images as $index => $image)
+                            @if($index > 0)
+                                <div
+                                    class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                                    <img src="{{ asset('storage/' . $image) }}" alt="{{ $event->nama }}"
+                                        class="w-full h-32 object-cover transition duration-300 hover:scale-105">
                                 </div>
                             @endif
-                        @endif
-                    @endif
-                    <div class="mt-8">
-                        <a href=""
-                            class="w-full inline-block text-center no-underline bg-[#F3FFEB] text-[#7E9C5C] border-2 border-[#7E9C5C] px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#AEF161] hover:text-white transition duration-300">
-                            <i class="fa-solid fa-vr-cardboard"></i> Lihat Lokasi
-                        </a>
+                        @endforeach
                     </div>
                 @endif
 
+                <div
+                    class="rounded-3xl overflow-hidden border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Virtual
+                                Tour</p>
+                            <h2 class="mt-2 text-2xl font-semibold text-slate-900">Lihat suasana langsung</h2>
+                        </div>
+                        <span
+                            class="rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200">360°</span>
+                    </div>
+                    <div id="panorama-container" class="mt-6 h-[360px] overflow-hidden rounded-[1.5rem] bg-black">
+                        <div id="panorama" class="h-full w-full"></div>
+                    </div>
+                    <div id="vr-scene-container" class="mt-6 hidden h-[360px] overflow-hidden rounded-[1.5rem]"></div>
+                </div>
+                <div class="w-full lg:w-2/3">
+                    <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                        <h3 class="text-2xl font-bold text-slate-900">Deskripsi Kegiatan</h3>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed">{{ $event->event_detail }}</p>
+                
+                        <h3 class="mt-8 text-2xl font-bold text-slate-900">Kebutuhan Kegiatan</h3>
+                        <p class="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed">{{ $event->requirement }}</p>
+                    </div>
+                </div>
+            </div>
 
-                {{-- para donatur --}}
-                <p class="mt-5">Para Donatur :</p>
-                <div class="mt-6 p-2 bg-slate-100 rounded-md h-56 overflow-y-auto font-bold">
-                    @foreach ($donaturs as $donatur)
-                        <p>{{ $donatur->user->username ?? 'Anonim' }}</p>
-                    @endforeach
+            <div class="w-full lg:w-1/3 space-y-6">
+                <div
+                    class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                    <h3 class="text-2xl font-bold text-slate-900">{{ $event->nama }}</h3>
+                    <p class="mt-3 text-slate-600 dark:text-slate-300">Detail Kegiatan</p>
+
+                    <div class="mt-6 space-y-4 text-sm text-slate-700 dark:text-slate-300">
+                        <div>
+                            <p class="font-semibold text-slate-900">Waktu</p>
+                            <p>{{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y') }} -
+                                {{ \Carbon\Carbon::parse($event->tanggal_selesai)->format('d M Y') }}</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-900">Alamat</p>
+                            <p class="text-blue-600 dark:text-blue-300">{{ $event->alamat }}</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-900">Kategori</p>
+                            <span
+                                class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200">{{ ucfirst($event->tags) }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <div class="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
+                            <span class="font-semibold">Progress</span>
+                            <span>{{ $event->progress_event }}%</span>
+                        </div>
+                        <div class="mt-2 h-3 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                            <div class="h-full rounded-full bg-blue-500" style="width: {{ $event->progress_event }}%;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="map" class="mt-6 h-48 w-full rounded-3xl border border-slate-200 dark:border-slate-700">
+                    </div>
                 </div>
 
-                <form action="../Form Regist Join Event/join-event.php" method="post" class="daftarRelawan">
-                    <input type="hidden" name="event_id" value="$eventId">
-                </form>
+                <div
+                    class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                    @if (auth()->id() != $event->host)
+                        @if ($event->progress_event != 100)
+                            <a href="{{ route('donasi', ['event' => $event->id_event]) }}"
+                                class="block w-full rounded-3xl bg-emerald-500 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-emerald-400">
+                                Donasi Sekarang
+                            </a>
+                        @endif
 
-                <form action="../Payment-Gateway/paygate.php" method="post" class="donasi">
-                    <input type="hidden" name="event_id" value="$eventId">
-                </form>
+                        @if ($event->relawan->contains('user_id', auth()->id()))
+                            <div class="mt-4 rounded-3xl bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">Anda sudah
+                                terdaftar sebagai relawan.</div>
+                        @else
+                            @if (auth()->user()->canany(['relawan-daftar']))
+                                @if (auth()->user()->nik && auth()->user()->no_hp && auth()->user()->alamat && auth()->user()->ktp)
+                                    <a href="{{ route('relawan.daftar', ['event' => $event->id_event]) }}"
+                                        class="block w-full rounded-3xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-500">
+                                        Daftar sebagai Relawan
+                                    </a>
+                                @else
+                                    <a href="{{ route('profile.edit') }}"
+                                        class="block w-full rounded-3xl bg-red-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-red-500">
+                                        Lengkapi Profil untuk Mendaftar
+                                    </a>
+                                @endif
+                            @endif
+                        @endif
+                    @endif
+                    <a href="#panorama-container"
+                        class="mt-4 inline-flex w-full items-center justify-center rounded-3xl border border-emerald-500 bg-emerald-50 px-5 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-500 hover:text-white">
+                        <i class="fa-solid fa-vr-cardboard mr-2"></i> Lihat Lokasi
+                    </a>
+                </div>
 
-                <form action="../Donatur/donatur.php" method="post" class="donaturDetail">
-                    <input type="hidden" name="event_id" value="$eventId">
-                </form>
+                <div
+                    class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                    <h3 class="text-lg font-semibold text-slate-900">Para Donatur</h3>
+                    <div class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                        @forelse ($donaturs as $donatur)
+                            <div class="rounded-2xl bg-slate-100 p-3 dark:bg-slate-800">
+                                {{ $donatur->user->username ?? 'Anonim' }}</div>
+                        @empty
+                            <p class="text-slate-500 dark:text-slate-400">Belum ada donatur.</p>
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                    <h3 class="text-2xl font-bold text-slate-900">Para Relawan</h3>
+                    <div class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                        @forelse ($relawans as $relawan)
+                            <div class="rounded-2xl bg-slate-100 p-3 dark:bg-slate-800">{{ $relawan->nama_lengkap }}</div>
+                        @empty
+                            <p class="text-slate-500 dark:text-slate-400">Belum ada relawan.</p>
+                        @endforelse
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div class="mt-10 flex flex-col gap-8 lg:flex-row">
+
         </div>
     </main>
-
-
-    <div class="row mb-5">
-        <div class="col-8">
-            <div class="mt-4">
-                <p class="deskripsi">Deskripsi Kegiatan</p>
-                <p>{{ $event->event_detail }}</p>
-
-                <p class="kebutuhan mt-5">Kebutuhan Kegiatan</p>
-                <p>{{ $event->requirement }}</p>
-
-                <p class="para-relawan mt-5">Para Relawan</p>
-            </div>
-            <div class="mt-6">
-                <ol class="list-inside list-decimal">
-                    @foreach ($relawans as $relawan)
-                        <li class="text-gray-600 dark:text-gray-400">{{ $relawan->nama_lengkap }}</li>
-                    @endforeach
-                </ol>
-            </div>
-
-        </div>
-    </div>
 
     <!-- Akhir ui -->
 
@@ -171,7 +190,7 @@
 
     @if ($event->latitude && $event->longitude)
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 const latitude = @json($event->latitude);
                 const longitude = @json($event->longitude);
                 const map = L.map('map').setView([latitude, longitude], 13);
@@ -182,7 +201,7 @@
 
                 L.marker([latitude, longitude]).addTo(map).bindPopup('Lokasi Kegiatan!').openPopup();
 
-                window.addEventListener("resize", function() {
+                window.addEventListener("resize", function () {
                     map.invalidateSize();
                 });
             });
@@ -218,7 +237,7 @@
             return false;
         }
 
-        document.addEventListener("DOMContentLoaded", async function() {
+        document.addEventListener("DOMContentLoaded", async function () {
             const isVRAvailable = await supportsWebXR();
 
             if (isVRAvailable) {
