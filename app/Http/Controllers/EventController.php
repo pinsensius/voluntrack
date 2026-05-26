@@ -17,11 +17,11 @@ class EventController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:event-list', only : ['index']),
-            new Middleware('permission:event-create', only : ['create','store']),
-            new Middleware('permission:event-edit', only : ['edit','update']),
-            new Middleware('permission:event-delete', only : ['destroy']),
-            new Middleware('permission:event-show', only : ['show'])
+            new Middleware('permission:event-list', only: ['index']),
+            new Middleware('permission:event-create', only: ['create', 'store']),
+            new Middleware('permission:event-edit', only: ['edit', 'update']),
+            new Middleware('permission:event-delete', only: ['destroy']),
+            new Middleware('permission:event-show', only: ['show'])
         ];
     }
     /**
@@ -31,13 +31,13 @@ class EventController extends Controller implements HasMiddleware
     {
         $search = $request->input('search');
 
-        if($search){
-            $events = Event::where('nama','like','%'. $search. '%')->orWhere('tags','like','%'. $search. '%')->orWhere('alamat','like','%'. $search. '%')->orWhere('event_detail','like','%'. $search. '%')->get();
-        }else{
+        if ($search) {
+            $events = Event::where('nama', 'like', '%' . $search . '%')->orWhere('tags', 'like', '%' . $search . '%')->orWhere('alamat', 'like', '%' . $search . '%')->orWhere('event_detail', 'like', '%' . $search . '%')->get();
+        } else {
             $events = Event::with('user')->get();
         }
 
-        foreach($events as $event){
+        foreach ($events as $event) {
             $totalDonasi = Donasi::where('event_id', $event->id_event)->sum("amount");
             $persentaseDonasi = $event->target_donasi > 0 ? round(($totalDonasi / $event->target_donasi) * 100, 2) : 0;
 
@@ -49,7 +49,7 @@ class EventController extends Controller implements HasMiddleware
 
         return view('event.index', compact('events'));
 
-       
+
     }
 
     /**
@@ -85,18 +85,18 @@ class EventController extends Controller implements HasMiddleware
 
         $imagePath = [];
 
-        if( $request->hasFile('event_image')){
-            foreach($request->file('event_image') as $image){
+        if ($request->hasFile('event_image')) {
+            foreach ($request->file('event_image') as $image) {
                 $imagePath[] = $image->store('event', 'public');
             }
         }
 
         $vrImagePath = null;
 
-        if( $request->hasFile('vr_image')){
+        if ($request->hasFile('vr_image')) {
             // dd($request->file('vr_image'));
             $vrImagePath = $request->file('vr_image')->store('360', 'public');
-        }else{
+        } else {
             echo "gambar gak masuk";
         }
 
@@ -128,7 +128,7 @@ class EventController extends Controller implements HasMiddleware
         $relawans = Relawan::where('event_id', $event->id_event)->latest()->get();
         $donaturs = Donasi::with('user')->where('event_id', $event->id_event)->latest()->get()->unique('donatur');
 
-        return view('event.show', compact('event', 'relawans', 'donaturs'));   
+        return view('event.show', compact('event', 'relawans', 'donaturs'));
 
     }
 
@@ -137,7 +137,7 @@ class EventController extends Controller implements HasMiddleware
      */
     public function edit(Event $event)
     {
-        
+
         return view('event.update', compact('event'));
     }
 
@@ -207,14 +207,14 @@ class EventController extends Controller implements HasMiddleware
      * Remove the specified resource from storage.
      */
     public function destroy(Event $event)
-    {   
-        if($event->event_image) {
+    {
+        if ($event->event_image) {
             $imagePaths = json_decode($event->event_image, true);
-            foreach($imagePaths as $path) {
+            foreach ($imagePaths as $path) {
                 Storage::disk('public')->delete($path);
             }
         }
-        
+
         $event->delete();
 
         return redirect()->back()->with('success', 'Data berhasil dihapus');
